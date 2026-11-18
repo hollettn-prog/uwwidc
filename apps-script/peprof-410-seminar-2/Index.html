@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    :root {
+      font-family: Arial, Helvetica, sans-serif;
+      color: #251c31;
+      background: #f7f5fa;
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+
+    header {
+      background: #501d82;
+      color: white;
+      padding: 28px max(20px, calc((100vw - 1050px) / 2));
+    }
+
+    header small {
+      color: #fcb813;
+      font-weight: bold;
+      letter-spacing: .07em;
+    }
+
+    h1 {
+      margin: 8px 0;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+    }
+
+    h2 {
+      color: #501d82;
+      margin: 0 0 7px;
+    }
+
+    p { line-height: 1.5; }
+
+    main {
+      max-width: 1050px;
+      margin: auto;
+      padding: 22px 18px 60px;
+    }
+
+    .intro, .panel {
+      background: white;
+      border: 1px solid #e4dfec;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+
+    .intro {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      gap: 14px;
+      justify-content: space-between;
+    }
+
+    .intro label {
+      min-width: 220px;
+      flex: 1;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 18px 0;
+    }
+
+    button, .button {
+      cursor: pointer;
+      border: 0;
+      border-radius: 8px;
+      background: #501d82;
+      color: white;
+      padding: 11px 16px;
+      font: inherit;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    button:hover, .button:hover {
+      background: #38105f;
+    }
+
+    .tabs button {
+      background: white;
+      color: #501d82;
+      border: 1px solid #c5b5d8;
+    }
+
+    .tabs button[aria-selected="true"] {
+      background: #501d82;
+      color: white;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin: 14px 0;
+    }
+
+    input[type=text], textarea {
+      display: block;
+      width: 100%;
+      border: 1px solid #bbb1c8;
+      border-radius: 7px;
+      padding: 10px;
+      margin-top: 6px;
+      font: inherit;
+      color: #251c31;
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    .hint {
+      color: #5d5465;
+      font-size: .94rem;
+    }
+
+    .card {
+      border: 1px solid #e4dfec;
+      border-left: 4px solid #fcb813;
+      border-radius: 8px;
+      padding: 12px 15px;
+      margin: 10px 0;
+      overflow-wrap: anywhere;
+    }
+
+    .card strong { color: #501d82; }
+
+    .card p {
+      margin: 7px 0;
+      white-space: pre-wrap;
+    }
+
+    .status {
+      min-height: 22px;
+      color: #501d82;
+      font-weight: bold;
+    }
+
+    .error { color: #9a1832; }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .link {
+      color: #501d82;
+      font-weight: bold;
+    }
+
+    .count {
+      color: #5d5465;
+      font-size: .9rem;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <small>PEPROF 410 · SEMINAR MEETING 2</small>
+    <h1>Midseason Check-In</h1>
+    <p>Pause, take stock, and prepare for what comes next.</p>
+  </header>
+
+  <main>
+    <div class="intro">
+      <div>
+        <strong>How we’ll use this board</strong>
+        <p>
+          Keep Webex open, use the tabs as we move through the seminar,
+          and read your classmates’ responses. You can revise your own
+          post at any time.
+        </p>
+      </div>
+
+      <label>
+        Your first name or nickname
+        <input
+          id="name"
+          type="text"
+          maxlength="50"
+          autocomplete="nickname"
+          placeholder="e.g., Nikki"
+        >
+      </label>
+
+      <div class="links">
+        <a
+          class="button"
+          href="https://uww.webex.com/uww/j.php?MTID=mccab8edeeee305a75e98b476d5c141db"
+          target="_blank"
+          rel="noopener"
+        >Join Webex ↗</a>
+
+        <a
+          class="link"
+          href="https://script.google.com/macros/s/AKfycbwp2P9nrIXiIo9Lff8W9_ueOn7u_pO0LE7OrPIsARfkKGaHM9rSb4JVlV3S3gxaDVph/exec?meeting=2&amp;view=student"
+          target="_blank"
+          rel="noopener"
+        >Open presentation ↗</a>
+      </div>
+    </div>
+
+    <p class="hint">
+      Shared board: avoid pupil names, identifiable stories, and private
+      school information. Licensing questions can be posted anonymously.
+      Posts are visible to anyone with this board link.
+    </p>
+
+    <nav
+      class="tabs"
+      aria-label="Seminar activities"
+      id="tabs"
+    ></nav>
+
+    <div class="grid">
+      <section class="panel" aria-labelledby="activityTitle">
+        <h2 id="activityTitle"></h2>
+        <p id="activityPrompt"></p>
+        <div id="fields"></div>
+
+        <label id="anonWrap" style="display:none">
+          <input type="checkbox" id="anonymous">
+          Post my licensing question anonymously
+        </label>
+
+        <button id="save" type="button">
+          Share with group
+        </button>
+
+        <p class="status" role="status" id="status"></p>
+      </section>
+
+      <section class="panel" aria-labelledby="groupTitle">
+        <h2 id="groupTitle">Group responses</h2>
+        <span class="count" id="count"></span>
+        <div id="responses" aria-live="polite"></div>
+      </section>
+    </div>
+
+    <div class="panel" id="resource" hidden>
+      <strong>Licensing source check</strong>
+      <p>
+        Find information at the Wisconsin Department of Public Instruction.
+        Record a question here for discussion; confirm requirements on the
+        official site and with your educator preparation program.
+      </p>
+
+      <a
+        class="link"
+        href="https://dpi.wi.gov/licensing"
+        target="_blank"
+        rel="noopener"
+      >Wisconsin DPI educator licensing ↗</a>
+    </div>
+  </main>
+
+  <script>
+    const activities = {
+      checkin: {
+        title: '1 · Where are you now?',
+        prompt: 'Take two minutes to name one moment of growth and one current challenge. Then compare themes with the group.',
+        labels: {
+          win: 'Something I’m doing more confidently',
+          stretch: 'Something I’m still working through'
+        }
+      },
+
+      licensing: {
+        title: '2 · Licensing questions',
+        prompt: 'What do you need to verify about the licensing process? If you found an official source, add it. We will discuss questions together.',
+        labels: {
+          question: 'My licensing question',
+          source: 'Official source or next place I’ll check (optional)'
+        }
+      },
+
+      evidence: {
+        title: '3 · Turn experience into evidence',
+        prompt: 'Pick one teaching moment. Move from “what I did” to what changed for pupils and what could show that learning.',
+        labels: {
+          action: 'What I did as a teacher',
+          impact: 'What I noticed pupils did or learned',
+          artifact: 'Evidence I could save or describe'
+        }
+      },
+
+      next: {
+        title: '4 · Try · Notice · Ask',
+        prompt: 'Choose one concrete action for the next stretch of student teaching. Finish the three-part exit ticket.',
+        labels: {
+          try: 'One thing I will try',
+          notice: 'One thing I will notice or collect',
+          ask: 'One question I will ask my cooperating teacher or supervisor'
+        }
+      }
+    };
+
+    const sections = Object.keys(activities);
+    const tokenKey = 'peprof410-seminar2-token';
+
+    let token = localStorage.getItem(tokenKey);
+
+    if (!token) {
+      token = crypto.randomUUID
+        ? crypto.randomUUID()
+        : Array.from(
+            crypto.getRandomValues(new Uint8Array(16)),
+            b => b.toString(16).padStart(2, '0')
+          ).join('');
+
+      localStorage.setItem(tokenKey, token);
+    }
+
+    const nameBox = document.getElementById('name');
+    nameBox.value =
+      localStorage.getItem('peprof410-seminar2-name') || '';
+
+    let active = 'checkin';
+    let board = { sections: {}, mine: {} };
+
+    const el = id => document.getElementById(id);
+
+    const status = (message, error = false) => {
+      el('status').textContent = message;
+      el('status').classList.toggle('error', error);
+    };
+
+    const safeNode = (tag, textValue, cls) => {
+      const node = document.createElement(tag);
+      node.textContent = textValue;
+      if (cls) node.className = cls;
+      return node;
+    };
+
+    function showActivity(section) {
+      active = section;
+      status('');
+
+      const activity = activities[section];
+      el('activityTitle').textContent = activity.title;
+      el('activityPrompt').textContent = activity.prompt;
+      el('resource').hidden = section !== 'licensing';
+      el('anonWrap').style.display =
+        section === 'licensing' ? 'block' : 'none';
+      el('anonymous').checked = false;
+
+      el('tabs').replaceChildren();
+
+      sections.forEach(key => {
+        const button = safeNode('button', activities[key].title);
+        button.type = 'button';
+        button.setAttribute(
+          'aria-selected',
+          String(key === section)
+        );
+        button.onclick = () => showActivity(key);
+        el('tabs').append(button);
+      });
+
+      const container = el('fields');
+      container.replaceChildren();
+
+      Object.entries(activity.labels).forEach(([key, label]) => {
+        const wrapper = safeNode('label', label);
+        const input = document.createElement('textarea');
+
+        input.dataset.field = key;
+        input.maxLength = 500;
+        input.value = (board.mine[section] || {})[key] || '';
+
+        wrapper.append(input);
+        container.append(wrapper);
+      });
+
+      showResponses();
+    }
+
+    function showResponses() {
+      const items = board.sections[active] || [];
+
+      el('count').textContent =
+        items.length + ' shared ' +
+        (items.length === 1 ? 'response' : 'responses');
+
+      const target = el('responses');
+      target.replaceChildren();
+
+      if (!items.length) {
+        target.append(
+          safeNode(
+            'p',
+            'No responses yet. Be the first to share.',
+            'hint'
+          )
+        );
+        return;
+      }
+
+      items.forEach(item => {
+        const card = safeNode('article', '', 'card');
+        card.append(safeNode('strong', item.name));
+
+        Object.entries(activities[active].labels)
+          .forEach(([key, label]) => {
+            if (!item.fields[key]) return;
+
+            const paragraph = document.createElement('p');
+            paragraph.append(
+              safeNode('b', label + ': '),
+              document.createTextNode(item.fields[key])
+            );
+            card.append(paragraph);
+          });
+
+        target.append(card);
+      });
+    }
+
+    function refresh() {
+      google.script.run
+        .withSuccessHandler(data => {
+          board = data;
+          showResponses();
+        })
+        .withFailureHandler(err => {
+          status(
+            err.message || 'Could not load the board.',
+            true
+          );
+        })
+        .getBoard(token);
+    }
+
+    el('save').onclick = () => {
+      const name = nameBox.value.trim();
+
+      if (!name) {
+        status('Enter your first name or a nickname.', true);
+        nameBox.focus();
+        return;
+      }
+
+      localStorage.setItem('peprof410-seminar2-name', name);
+
+      const fields = {};
+      el('fields')
+        .querySelectorAll('textarea')
+        .forEach(input => {
+          fields[input.dataset.field] = input.value;
+        });
+
+      const section = active;
+      const anonymous = el('anonymous').checked;
+
+      el('save').disabled = true;
+      status('Posting…');
+
+      google.script.run
+        .withSuccessHandler(data => {
+          board = data;
+          el('save').disabled = false;
+          status('Shared. You can edit and post again.');
+          showResponses();
+        })
+        .withFailureHandler(err => {
+          el('save').disabled = false;
+          status(
+            err.message || 'Could not save. Try again.',
+            true
+          );
+        })
+        .saveResponse({
+          section,
+          token,
+          name,
+          fields,
+          anonymous
+        });
+    };
+
+    showActivity(active);
+    refresh();
+    setInterval(refresh, 10000);
+  </script>
+</body>
+</html>

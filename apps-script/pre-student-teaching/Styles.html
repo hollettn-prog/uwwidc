@@ -1,0 +1,1661 @@
+<style>
+
+/* =========================================================
+   PRE-STUDENT TEACHING TOOLKIT
+   SHARED STYLES
+   ========================================================= */
+
+
+/* =========================================================
+   VARIABLES
+   ========================================================= */
+
+:root {
+
+  --purple: #501d82;
+  --purple-dark: #321052;
+  --purple-soft: #f5f1f8;
+
+  --gold: #fcb813;
+
+  --text: #242424;
+  --muted: #5f5f5f;
+
+  --background: #f5f5f5;
+  --white: #ffffff;
+
+  --border: #dddddd;
+  --border-dark: #c8c8c8;
+
+  --success: #31734c;
+
+}
+
+
+/* =========================================================
+   BASE
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+
+  margin: 0;
+
+  background: var(--background);
+
+  color: var(--text);
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 18px;
+
+  line-height: 1.6;
+
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+button {
+  font-size: inherit;
+}
+
+.app {
+
+  max-width: 1200px;
+
+  min-height: 100vh;
+
+  margin: 0 auto;
+
+  background: var(--white);
+
+  box-shadow:
+    0 0 20px rgba(0,0,0,.06);
+
+}
+
+
+/* =========================================================
+   TOP BAR
+   ========================================================= */
+
+.topbar {
+
+  min-height: 90px;
+
+  padding:
+    17px 42px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 30px;
+
+  background: var(--purple);
+
+}
+
+.site-title {
+
+  border: 0;
+
+  background: transparent;
+
+  color: white;
+
+  padding: 0;
+
+  text-align: left;
+
+  cursor: pointer;
+
+}
+
+.site-title-main {
+
+  display: block;
+
+  font-size: 21px;
+
+  font-weight: 700;
+
+}
+
+.site-title-sub {
+
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 15px;
+
+  color: #e7ddec;
+
+}
+
+.topnav {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+}
+
+.nav-item {
+
+  border: 0;
+
+  background: transparent;
+
+  color: #eee7f2;
+
+  padding:
+    10px 14px;
+
+  cursor: pointer;
+
+  font-weight: 600;
+
+  font-size: 17px;
+
+}
+
+.nav-item:hover {
+  color: white;
+}
+
+.nav-item.active {
+
+  color: white;
+
+  border-bottom:
+    3px solid var(--gold);
+
+}
+
+.gold-rule {
+
+  height: 5px;
+
+  background: var(--gold);
+
+}
+
+
+/* =========================================================
+   GENERAL TYPOGRAPHY
+   ========================================================= */
+
+h1,
+h2,
+h3 {
+
+  color: var(--purple-dark);
+
+}
+
+h1 {
+
+  margin:
+    8px 0 18px;
+
+  font-size:
+    clamp(42px, 5vw, 58px);
+
+  line-height: 1.08;
+
+  letter-spacing: -1px;
+
+}
+
+h2 {
+
+  margin:
+    6px 0 14px;
+
+  font-size: 32px;
+
+  line-height: 1.2;
+
+}
+
+h3 {
+
+  margin:
+    0 0 8px;
+
+  font-size: 23px;
+
+  line-height: 1.3;
+
+}
+
+
+/* =========================================================
+   IMPORTANT SECTION LABELS
+
+   Examples:
+   PRE-STUDENT TEACHING TOOLKIT
+   YOUR COURSES
+   YOUR TOOLKIT
+   PEPROF 437
+   ========================================================= */
+
+.eyebrow {
+
+  display: block;
+
+  margin-bottom: 9px;
+
+  color: var(--purple);
+
+  font-size: 20px;
+
+  line-height: 1.25;
+
+  font-weight: 800;
+
+  letter-spacing: .7px;
+
+}
+
+
+/* =========================================================
+   HOME — WELCOME
+   ========================================================= */
+
+.welcome {
+
+  display: grid;
+
+  grid-template-columns:
+    2fr 1fr;
+
+  gap: 60px;
+
+  padding:
+    60px 50px 52px;
+
+  border-bottom:
+    1px solid var(--border);
+
+}
+
+.welcome-copy {
+
+  max-width: 760px;
+
+}
+
+.welcome-lead {
+
+  margin-bottom: 11px;
+
+  font-size: 23px;
+
+  line-height: 1.5;
+
+  color: #363636;
+
+}
+
+.welcome-copy p:not(.welcome-lead) {
+
+  max-width: 700px;
+
+  font-size: 18px;
+
+  line-height: 1.6;
+
+  color: var(--muted);
+
+}
+
+.welcome-side {
+
+  display: flex;
+
+  align-items: center;
+
+}
+
+.small-note {
+
+  border-left:
+    5px solid var(--gold);
+
+  padding:
+    13px 0 13px 20px;
+
+  color: var(--muted);
+
+  font-size: 18px;
+
+  line-height: 1.55;
+
+}
+
+.small-note strong {
+
+  color: var(--purple-dark);
+
+}
+
+
+/* =========================================================
+   HOME — MAIN SECTIONS
+   ========================================================= */
+
+.main-section {
+
+  padding:
+    50px 50px;
+
+}
+
+.section-header {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: end;
+
+  margin-bottom: 27px;
+
+}
+
+
+/* =========================================================
+   HOME — COURSE LIST
+   ========================================================= */
+
+.course-list {
+
+  border-top:
+    1px solid var(--border);
+
+}
+
+.course-row {
+
+  width: 100%;
+
+  border: 0;
+
+  border-bottom:
+    1px solid var(--border);
+
+  background: white;
+
+  display: grid;
+
+  grid-template-columns:
+    190px 1fr 55px;
+
+  gap: 30px;
+
+  align-items: center;
+
+  padding:
+    27px 12px;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  color: inherit;
+
+  transition:
+    background .15s ease;
+
+}
+
+.course-row:hover {
+
+  background:
+    var(--purple-soft);
+
+}
+
+.course-code {
+
+  color: var(--purple);
+
+  font-size: 19px;
+
+  font-weight: 800;
+
+  letter-spacing: .2px;
+
+}
+
+.course-name {
+
+  color: var(--purple-dark);
+
+  font-size: 23px;
+
+  line-height: 1.3;
+
+  font-weight: 700;
+
+}
+
+.course-description {
+
+  margin-top: 5px;
+
+  color: var(--muted);
+
+  font-size: 18px;
+
+  line-height: 1.5;
+
+}
+
+.course-arrow {
+
+  color: var(--purple);
+
+  font-size: 32px;
+
+  text-align: center;
+
+}
+
+
+/* =========================================================
+   HOME — GOOGLE DRIVE TOOLKIT
+   ========================================================= */
+
+.toolkit-section {
+
+  margin:
+    14px 50px 50px;
+
+  padding:
+    32px 0;
+
+  border-top:
+    1px solid var(--border);
+
+  border-bottom:
+    1px solid var(--border);
+
+  display: grid;
+
+  grid-template-columns:
+    1fr auto auto;
+
+  gap: 35px;
+
+  align-items: center;
+
+}
+
+.toolkit-section p {
+
+  margin:
+    8px 0 0;
+
+  max-width: 660px;
+
+  color: var(--muted);
+
+  font-size: 18px;
+
+  line-height: 1.55;
+
+}
+
+.toolkit-status {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  min-width: 185px;
+
+}
+
+.status-dot {
+
+  width: 13px;
+
+  height: 13px;
+
+  border-radius: 50%;
+
+  background: #999;
+
+}
+
+.status-label {
+
+  font-size: 17px;
+
+  font-weight: 700;
+
+}
+
+.status-detail {
+
+  margin-top: 2px;
+
+  color: var(--muted);
+
+  font-size: 15px;
+
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.primary-button,
+.open-button {
+
+  border: 0;
+
+  background: var(--purple);
+
+  color: white;
+
+  border-radius: 5px;
+
+  padding:
+    14px 22px;
+
+  cursor: pointer;
+
+  font-size: 18px;
+
+  font-weight: 700;
+
+}
+
+.primary-button:hover,
+.open-button:hover {
+
+  background:
+    var(--purple-dark);
+
+}
+
+.outline-button {
+
+  border:
+    1px solid var(--purple);
+
+  background: white;
+
+  color: var(--purple);
+
+  border-radius: 5px;
+
+  padding:
+    12px 18px;
+
+  cursor: pointer;
+
+  font-size: 17px;
+
+  font-weight: 700;
+
+}
+
+.outline-button:hover {
+
+  background:
+    var(--purple-soft);
+
+}
+
+.disabled-button {
+
+  border: 0;
+
+  background: #eeeeee;
+
+  color: #707070;
+
+  border-radius: 5px;
+
+  padding:
+    14px 20px;
+
+  font-size: 17px;
+
+  font-weight: 700;
+
+}
+
+
+/* =========================================================
+   SMALL HUMAN / HUMOR NOTE
+   ========================================================= */
+
+.future-note {
+
+  margin:
+    0 50px 54px;
+
+  padding:
+    18px 20px;
+
+  background: #fafafa;
+
+  border-left:
+    4px solid var(--gold);
+
+  color: var(--muted);
+
+  font-size: 17px;
+
+  line-height: 1.55;
+
+}
+
+.future-note strong {
+
+  color:
+    var(--purple-dark);
+
+}
+
+
+/* =========================================================
+   COURSE PAGE
+   ========================================================= */
+
+.course-page {
+
+  padding:
+    52px 50px 70px;
+
+}
+
+
+/* Back to all courses */
+
+.back-button {
+
+  border: 0;
+
+  background: transparent;
+
+  color: var(--purple);
+
+  padding: 0;
+
+  cursor: pointer;
+
+  font-size: 18px;
+
+  font-weight: 700;
+
+  margin-bottom: 38px;
+
+}
+
+.back-button:hover {
+
+  text-decoration: underline;
+
+}
+
+
+/* =========================================================
+   COURSE HEADER
+   ========================================================= */
+
+.course-header {
+
+  padding-bottom: 42px;
+
+  border-bottom:
+    2px solid var(--border);
+
+}
+
+
+/* PEPROF 437 / course identifier */
+
+.course-header .eyebrow {
+
+  font-size: 20px;
+
+  font-weight: 800;
+
+  letter-spacing: .8px;
+
+  margin-bottom: 11px;
+
+}
+
+
+/* Elementary Physical Education */
+
+.course-header h1 {
+
+  font-size:
+    clamp(46px, 5vw, 60px);
+
+  line-height: 1.08;
+
+  margin:
+    5px 0 21px;
+
+}
+
+
+/* Course description */
+
+.course-header p {
+
+  max-width: 920px;
+
+  margin-bottom: 0;
+
+  color: var(--muted);
+
+  font-size: 21px;
+
+  line-height: 1.55;
+
+}
+
+
+/* =========================================================
+   MODULES
+   ========================================================= */
+
+.module {
+
+  margin-top: 50px;
+
+}
+
+
+/* MODULE 1 · FOUNDATIONS OF ELEMENTARY PE */
+
+.module-number {
+
+  margin-bottom: 15px;
+
+  color: var(--purple);
+
+  font-size: 20px;
+
+  line-height: 1.35;
+
+  font-weight: 800;
+
+  letter-spacing: .4px;
+
+  text-transform: uppercase;
+
+}
+
+
+/* =========================================================
+   ARTIFACT ROWS
+   ========================================================= */
+
+.artifact-row {
+
+  border-top:
+    1px solid var(--border);
+
+  border-bottom:
+    1px solid var(--border);
+
+  padding:
+    30px 8px;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr auto;
+
+  gap: 38px;
+
+  align-items: center;
+
+}
+
+
+/* Elementary PE Philosophy */
+
+.artifact-title {
+
+  color:
+    var(--purple-dark);
+
+  font-size: 26px;
+
+  line-height: 1.3;
+
+  font-weight: 700;
+
+}
+
+
+/* Artifact description */
+
+.artifact-description {
+
+  margin-top: 9px;
+
+  max-width: 920px;
+
+  color: var(--muted);
+
+  font-size: 20px;
+
+  line-height: 1.55;
+
+}
+
+
+/* READY / UNDER REVIEW / REDESIGN IN PROGRESS */
+
+.artifact-meta {
+
+  margin-top: 14px;
+
+  color: #707070;
+
+  font-size: 16px;
+
+  line-height: 1.3;
+
+  font-weight: 800;
+
+  letter-spacing: .4px;
+
+  text-transform: uppercase;
+
+}
+
+.artifact-meta.available {
+
+  color:
+    var(--success);
+
+}
+
+
+/* =========================================================
+   COURSE PAGE BUTTONS
+   ========================================================= */
+
+.artifact-row .open-button {
+
+  min-width: 105px;
+
+  padding:
+    14px 23px;
+
+  font-size: 18px;
+
+}
+
+.artifact-row .disabled-button {
+
+  min-width: 150px;
+
+  padding:
+    14px 20px;
+
+  font-size: 17px;
+
+}
+
+
+/* =========================================================
+   TOOLKIT INFORMATION PAGE
+   ========================================================= */
+
+.info-page {
+
+  max-width: 920px;
+
+  padding:
+    52px 50px 70px;
+
+}
+
+.info-page > p {
+
+  color: var(--muted);
+
+  font-size: 20px;
+
+  line-height: 1.6;
+
+}
+
+.info-row {
+
+  padding:
+    27px 0;
+
+  border-bottom:
+    1px solid var(--border);
+
+}
+
+.info-row h3 {
+
+  font-size: 23px;
+
+}
+
+.info-row p {
+
+  margin:
+    7px 0 0;
+
+  color: var(--muted);
+
+  font-size: 18px;
+
+  line-height: 1.55;
+
+}
+
+
+/* =========================================================
+   BUILDER / FORM STYLES
+   These will carry into M1, M2, etc.
+   ========================================================= */
+
+.builder-page {
+
+  padding:
+    50px 50px 70px;
+
+}
+
+.builder-header {
+
+  padding-bottom: 35px;
+
+  border-bottom:
+    2px solid var(--border);
+
+}
+
+.builder-header h1 {
+
+  font-size:
+    clamp(40px, 5vw, 54px);
+
+}
+
+.builder-header p {
+
+  max-width: 850px;
+
+  color: var(--muted);
+
+  font-size: 20px;
+
+  line-height: 1.6;
+
+}
+
+.form-section {
+
+  margin-top: 42px;
+
+}
+
+.form-section h2 {
+
+  font-size: 30px;
+
+}
+
+.form-section h3 {
+
+  font-size: 24px;
+
+}
+
+.form-section p {
+
+  font-size: 19px;
+
+  line-height: 1.6;
+
+}
+
+label {
+
+  display: block;
+
+  margin-top: 25px;
+
+  margin-bottom: 8px;
+
+  color: var(--purple-dark);
+
+  font-size: 19px;
+
+  line-height: 1.4;
+
+  font-weight: 700;
+
+}
+
+.helper-text {
+
+  margin:
+    -2px 0 10px;
+
+  color: var(--muted);
+
+  font-size: 17px;
+
+  line-height: 1.5;
+
+}
+
+input,
+textarea,
+select {
+
+  width: 100%;
+
+  border:
+    1px solid var(--border-dark);
+
+  border-radius: 5px;
+
+  padding:
+    13px 14px;
+
+  background: white;
+
+  color: var(--text);
+
+  font-size: 18px;
+
+  line-height: 1.5;
+
+}
+
+textarea {
+
+  min-height: 125px;
+
+  resize: vertical;
+
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+
+  outline:
+    3px solid rgba(80,29,130,.12);
+
+  border-color:
+    var(--purple);
+
+}
+
+
+/* =========================================================
+   BUILDER CALLOUTS
+   ========================================================= */
+
+.callout {
+
+  margin:
+    25px 0;
+
+  padding:
+    20px 22px;
+
+  background:
+    var(--purple-soft);
+
+  border-left:
+    5px solid var(--purple);
+
+}
+
+.callout-title {
+
+  color:
+    var(--purple-dark);
+
+  font-size: 20px;
+
+  font-weight: 700;
+
+  margin-bottom: 5px;
+
+}
+
+.callout p {
+
+  margin: 0;
+
+  font-size: 18px;
+
+  line-height: 1.55;
+
+}
+
+
+/* =========================================================
+   BUILDER NAVIGATION
+   ========================================================= */
+
+.builder-nav {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-top: 40px;
+
+  padding-top: 25px;
+
+  border-top:
+    1px solid var(--border);
+
+}
+
+.builder-nav button {
+
+  font-size: 18px;
+
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.footer {
+
+  border-top:
+    1px solid var(--border);
+
+  background: #fafafa;
+
+  color: #707070;
+
+  padding:
+    27px 42px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  font-size: 15px;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
+
+@media(max-width: 800px) {
+
+  .welcome {
+
+    grid-template-columns:
+      1fr;
+
+    gap: 30px;
+
+  }
+
+  .toolkit-section {
+
+    grid-template-columns:
+      1fr;
+
+    gap: 22px;
+
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media(max-width: 700px) {
+
+  body {
+
+    font-size: 17px;
+
+  }
+
+
+  /* TOP BAR */
+
+  .topbar {
+
+    display: block;
+
+    padding:
+      17px 24px;
+
+  }
+
+  .topnav {
+
+    margin-top: 13px;
+
+  }
+
+  .site-title-main {
+
+    font-size: 19px;
+
+  }
+
+  .site-title-sub {
+
+    font-size: 14px;
+
+  }
+
+
+  /* HOME */
+
+  .welcome {
+
+    padding:
+      44px 24px;
+
+  }
+
+  .main-section,
+  .course-page,
+  .info-page,
+  .builder-page {
+
+    padding-left:
+      24px;
+
+    padding-right:
+      24px;
+
+  }
+
+  .welcome h1 {
+
+    font-size:
+      40px;
+
+  }
+
+  .eyebrow {
+
+    font-size:
+      18px;
+
+  }
+
+
+  /* COURSE LIST */
+
+  .course-row {
+
+    grid-template-columns:
+      1fr 38px;
+
+    gap: 13px;
+
+    padding:
+      24px 5px;
+
+  }
+
+  .course-code {
+
+    grid-column:
+      1 / -1;
+
+    margin-bottom:
+      -3px;
+
+    font-size:
+      18px;
+
+  }
+
+  .course-info {
+
+    grid-column:
+      1;
+
+  }
+
+  .course-arrow {
+
+    grid-column:
+      2;
+
+    grid-row:
+      2;
+
+  }
+
+  .course-name {
+
+    font-size:
+      21px;
+
+  }
+
+  .course-description {
+
+    font-size:
+      17px;
+
+  }
+
+
+  /* TOOLKIT */
+
+  .toolkit-section {
+
+    margin-left:
+      24px;
+
+    margin-right:
+      24px;
+
+  }
+
+  .future-note {
+
+    margin-left:
+      24px;
+
+    margin-right:
+      24px;
+
+  }
+
+
+  /* COURSE PAGE */
+
+  .course-page {
+
+    padding-top:
+      40px;
+
+    padding-bottom:
+      58px;
+
+  }
+
+  .back-button {
+
+    font-size:
+      17px;
+
+    margin-bottom:
+      29px;
+
+  }
+
+  .course-header .eyebrow {
+
+    font-size:
+      18px;
+
+  }
+
+  .course-header h1 {
+
+    font-size:
+      40px;
+
+  }
+
+  .course-header p {
+
+    font-size:
+      18px;
+
+  }
+
+
+  /* MODULES */
+
+  .module {
+
+    margin-top:
+      42px;
+
+  }
+
+  .module-number {
+
+    font-size:
+      18px;
+
+  }
+
+  .artifact-row {
+
+    grid-template-columns:
+      1fr;
+
+    gap:
+      20px;
+
+    padding:
+      26px 5px;
+
+  }
+
+  .artifact-title {
+
+    font-size:
+      23px;
+
+  }
+
+  .artifact-description {
+
+    font-size:
+      18px;
+
+  }
+
+  .artifact-meta {
+
+    font-size:
+      15px;
+
+  }
+
+  .artifact-row button {
+
+    width:
+      100%;
+
+  }
+
+
+  /* BUILDER */
+
+  .builder-header h1 {
+
+    font-size:
+      38px;
+
+  }
+
+  .builder-header p {
+
+    font-size:
+      18px;
+
+  }
+
+  .form-section h2 {
+
+    font-size:
+      27px;
+
+  }
+
+  label {
+
+    font-size:
+      18px;
+
+  }
+
+  .helper-text {
+
+    font-size:
+      16px;
+
+  }
+
+  input,
+  textarea,
+  select {
+
+    font-size:
+      17px;
+
+  }
+
+  .builder-nav {
+
+    display:
+      block;
+
+  }
+
+  .builder-nav button {
+
+    width:
+      100%;
+
+    margin-top:
+      10px;
+
+  }
+
+
+  /* FOOTER */
+
+  .footer {
+
+    display:
+      block;
+
+    text-align:
+      center;
+
+  }
+
+  .footer div + div {
+
+    margin-top:
+      7px;
+
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+   ========================================================= */
+
+@media(max-width: 450px) {
+
+  h1 {
+
+    font-size:
+      38px;
+
+  }
+
+  h2 {
+
+    font-size:
+      29px;
+
+  }
+
+  .eyebrow {
+
+    font-size:
+      18px;
+
+  }
+
+  .module-number {
+
+    font-size:
+      17px;
+
+  }
+
+  .artifact-title {
+
+    font-size:
+      22px;
+
+  }
+
+  .artifact-description {
+
+    font-size:
+      17px;
+
+  }
+
+}
+
+</style>

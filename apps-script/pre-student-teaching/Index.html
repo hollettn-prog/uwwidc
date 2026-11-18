@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <base target="_top">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1">
+
+  <?!= include('Styles'); ?>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- TOP BAR -->
+
+  <header class="topbar">
+
+    <button class="site-title"
+            onclick="showHome()">
+      <span class="site-title-main">
+        Pre-Student Teaching Toolkit
+      </span>
+
+      <span class="site-title-sub">
+        UW–Whitewater Physical & Health Education
+      </span>
+    </button>
+
+
+    <nav class="topnav">
+
+      <button id="navHome"
+              class="nav-item active"
+              onclick="showHome()">
+        Home
+      </button>
+
+      <button id="navToolkit"
+              class="nav-item"
+              onclick="showToolkitInfo()">
+        My Toolkit
+      </button>
+
+    </nav>
+
+  </header>
+
+
+  <!-- GOLD ACCENT -->
+
+  <div class="gold-rule"></div>
+
+
+  <!-- DYNAMIC CONTENT -->
+
+  <main id="appContent">
+    <?!= include('Home'); ?>
+  </main>
+
+
+  <!-- FOOTER -->
+
+  <footer class="footer">
+
+    <div>
+      Pre-Student Teaching Toolkit
+    </div>
+
+    <div>
+      HEALTHED 445 · PEPROF 437 · PEPROF 447 · PEPROF 475
+    </div>
+
+  </footer>
+
+</div>
+
+
+<?!= include('Scripts'); ?>
+
+</body>
+</html>

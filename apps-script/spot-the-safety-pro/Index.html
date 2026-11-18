@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Roseman Gym: Spot the Safety Problems</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f5f2f9;
+      color: #292130;
+      font: 16px Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 24px;
+    }
+
+    header {
+      background: #501d82;
+      color: white;
+      padding: 24px;
+      border-radius: 14px;
+    }
+
+    h1 {
+      margin: 5px 0;
+      font-size: 30px;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+    }
+
+    header p {
+      margin: 5px 0;
+    }
+
+    .gold {
+      color: #ffd16a;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #ded5e7;
+      border-radius: 12px;
+      padding: 22px;
+      margin-top: 18px;
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+      border: 1px solid #501d82;
+      background: white;
+      color: #501d82;
+      border-radius: 7px;
+      padding: 10px 18px;
+    }
+
+    button:disabled {
+      opacity: 0.45;
+      cursor: default;
+    }
+
+    button:focus-visible,
+    textarea:focus-visible,
+    input:focus-visible {
+      outline: 3px solid #a365d5;
+      outline-offset: 3px;
+    }
+
+    .primary {
+      background: #501d82;
+      color: white;
+    }
+
+    .bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 12px 0;
+    }
+
+    .choice {
+      display: block;
+      width: 100%;
+      text-align: left;
+      margin: 10px 0;
+    }
+
+    .chosen {
+      border-width: 3px;
+      background: #f3ecfb;
+    }
+
+    svg {
+      width: 100%;
+      display: block;
+      background: #fcfbfe;
+      border-radius: 9px;
+    }
+
+    svg text {
+      font: 15px Arial;
+      fill: #392b46;
+    }
+
+    .caption {
+      background: #f5f0fc;
+      padding: 12px;
+      border-left: 4px solid #501d82;
+      min-height: 70px;
+    }
+
+    #feedback {
+      background: #fff8df;
+      padding: 16px;
+      margin: 12px 0;
+    }
+
+    textarea,
+    input {
+      width: 100%;
+      font: inherit;
+      padding: 10px;
+      border: 1px solid #b7a9c6;
+      border-radius: 6px;
+    }
+
+    textarea {
+      min-height: 100px;
+    }
+
+    small {
+      color: #62556b;
+    }
+
+    progress {
+      width: 100%;
+      accent-color: #501d82;
+    }
+
+    label {
+      display: block;
+      margin: 12px 0;
+    }
+
+    details {
+      margin-top: 12px;
+    }
+
+    summary {
+      cursor: pointer;
+    }
+
+    #results p {
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 12px;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    @media print {
+      .controls,
+      #stage,
+      #questions {
+        display: none !important;
+      }
+
+      body {
+        background: white;
+      }
+
+      .card {
+        break-inside: avoid;
+      }
+
+      main {
+        padding: 0;
+      }
+
+      header {
+        background: white;
+        color: #501d82;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <header>
+      <p class="gold">PEPROF 222 · SKILL 2</p>
+      <h1>Spot the Safety Problems</h1>
+      <p>Watch. Notice. Decide. Redesign.</p>
+    </header>
+
+    <section class="card">
+      <p>
+        This animated teaching scenario uses a
+        <strong>conceptual Roseman Gym layout</strong>.
+        It is not recorded footage or a measured floor plan.
+        The situations and door locations are fictional.
+      </p>
+
+      <p>
+        Watch each short scene, then choose what the teacher
+        should do. Feedback explains the decision.
+        No audio is required; the scene description provides
+        the same information.
+      </p>
+
+      <label class="controls">
+        <input
+          id="reduced"
+          type="checkbox"
+          style="width: auto;"
+        >
+        Use still scenes instead of animation
+      </label>
+
+      <p><strong id="step"></strong></p>
+      <h2 id="title"></h2>
+
+      <div id="stage">
+        <svg
+          viewBox="0 0 900 460"
+          role="img"
+          aria-labelledby="svgtitle svgdesc"
+        >
+          <title id="svgtitle">Gym scenario</title>
+          <desc id="svgdesc"></desc>
+
+          <rect
+            x="40"
+            y="35"
+            width="820"
+            height="380"
+            fill="#f9f6ee"
+            stroke="#62536f"
+            stroke-width="4"
+          />
+
+          <path
+            d="M450 35V415"
+            stroke="#ded5cd"
+          />
+
+          <circle
+            cx="450"
+            cy="225"
+            r="55"
+            stroke="#ded5cd"
+            fill="none"
+          />
+
+          <g id="scene"></g>
+        </svg>
+
+        <p class="caption" id="caption"></p>
+
+        <progress
+          id="progress"
+          max="8"
+          value="0"
+          aria-label="Scene playback progress"
+        ></progress>
+      </div>
+
+      <div class="bar controls">
+        <button class="primary" id="play">
+          Play scene
+        </button>
+
+        <button id="pause" disabled>
+          Pause
+        </button>
+
+        <button id="replay">
+          Restart scene
+        </button>
+
+        <button id="skip">
+          Read scene &amp; answer
+        </button>
+      </div>
+
+      <details>
+        <summary>Scene description / text alternative</summary>
+        <p id="transcript"></p>
+      </details>
+    </section>
+
+    <section class="card" id="questions" hidden>
+      <h2 id="question"></h2>
+      <div id="choices"></div>
+
+      <div id="feedback" role="status" hidden></div>
+
+      <button id="next" class="primary" hidden>
+        Next scene
+      </button>
+    </section>
+
+    <section class="card" id="finish" hidden>
+      <h2>Your teaching decisions</h2>
+
+      <p>
+        This is formative practice. Review your choices and
+        apply one change to your gym plan.
+      </p>
+
+      <div id="results"></div>
+
+      <label>
+        Name or group
+        <input id="name">
+      </label>
+
+      <label>
+        What would you change in your Roseman Gym plan?
+        <textarea
+          id="reflection"
+          placeholder="Describe the hazard, the design change, and how you would check that it works."
+        ></textarea>
+      </label>
+
+      <label>
+        What would you say before learners start moving?
+        <textarea
+          id="cue"
+          placeholder="Write a brief direction that includes boundaries, movement, and the stop signal."
+        ></textarea>
+      </label>
+
+      <div class="bar controls">
+        <button id="download" class="primary">
+          Download my responses
+        </button>
+
+        <button id="print">
+          Print / save PDF
+        </button>
+
+        <button id="restart">
+          Start over
+        </button>
+      </div>
+
+      <small>
+        Responses remain in this tab until you download or print
+        them. This activity does not automatically submit work
+        or grades to Canvas.
+      </small>
+    </section>
+  </main>
+
+  <script>
+    'use strict';
+
+    const scenes = [
+      {
+        title: '1 · The equipment rush',
+
+        description:
+          'Two groups start on opposite sides of the gym. ' +
+          'The teacher says, “Everyone, get a ball!” Both groups ' +
+          'head toward one equipment bin in the center. Their ' +
+          'routes converge and the pickup area becomes crowded.',
+
+        q: 'What should the teacher do first?',
+
+        choices: [
+          'Let the groups continue and remind them to be careful.',
+
+          'Use the taught stop signal, then organize staggered ' +
+          'collection with designated collectors and clear routes.',
+
+          'Move the bin to a corner while students continue ' +
+          'running toward it.'
+        ],
+
+        best: 1,
+
+        feedback: [
+          'A reminder does not change the converging routes or ' +
+          'crowding. Stop movement first, then change how ' +
+          'equipment is collected.',
+
+          'Stopping first lets the teacher reorganize collection. ' +
+          'Designated collectors, staggered turns and clear routes ' +
+          'reduce crowding at the bin.',
+
+          'Moving equipment during the rush changes the target ' +
+          'while students are moving. Stop the group before ' +
+          'relocating equipment or changing routes.'
+        ],
+
+        redesign:
+          'Distribute equipment by station or use staggered ' +
+          'collectors; demonstrate the return route.'
+      },
+
+      {
+        title: '2 · A route that disappears',
+
+        description:
+          'A student using a wheelchair approaches a station. ' +
+          'A bench and a mat occupy the route to the station and ' +
+          'a marked exit. The student pauses at the obstruction ' +
+          'while the rest of the group continues.',
+
+        q: 'Which change best supports safe participation?',
+
+        choices: [
+          'Ask the student to wait while classmates finish.',
+
+          'Have a partner move the wheelchair around the ' +
+          'equipment without asking.',
+
+          'Pause the affected activity, move the equipment out ' +
+          'of the route, and check access with the student ' +
+          'before restarting.'
+        ],
+
+        best: 2,
+
+        feedback: [
+          'Waiting leaves the design barrier in place and ' +
+          'excludes the student from the task. Restore access ' +
+          'to the same activity.',
+
+          'Do not move someone’s mobility device without consent. ' +
+          'The equipment layout is the barrier to address.',
+
+          'Clear the route and verify that the student can reach ' +
+          'and use the station. Keep the marked exit route clear ' +
+          'and check access before restarting.'
+        ],
+
+        redesign:
+          'Build clear routes into the layout from the start, ' +
+          'including equipment pickup and return.'
+      },
+
+      {
+        title: '3 · The hidden crossing',
+
+        description:
+          'The teacher stands at the lower-left corner, focused ' +
+          'on one station. At the far side of the gym, a group ' +
+          'travels across the path of a moving ball from another ' +
+          'station. The teacher is looking away from the crossing.',
+
+        q: 'What is the strongest redesign before restarting?',
+
+        choices: [
+          'Separate travel routes from ball activity, adjust ' +
+          'station orientation, and choose a teacher position ' +
+          'with a view across stations.',
+
+          'Stay beside the same station and ask students to ' +
+          'call out if something goes wrong.',
+
+          'Move closer to the crossing but keep both paths unchanged.'
+        ],
+
+        best: 0,
+
+        feedback: [
+          'Changing the layout addresses the crossing itself. ' +
+          'A better supervision position supports scanning, ' +
+          'but does not replace separating conflicting activities.',
+
+          'Waiting for students to report a problem is reactive. ' +
+          'Change the conflicting paths and improve supervision ' +
+          'before restarting.',
+
+          'A closer teacher may see more, but the crossing remains. ' +
+          'Change the activity orientation or routes as well as ' +
+          'the supervision position.'
+        ],
+
+        redesign:
+          'Sketch a route that avoids the ball activity; mark ' +
+          'a teacher position and scanning pattern.'
+      }
+    ];
+
+    const $ = id => document.getElementById(id);
+    const NS = 'http://www.w3.org/2000/svg';
+
+    let index = 0;
+    let t = 0;
+    let running = false;
+    let last = 0;
+    let frame = 0;
+    let answers = [];
+
+    $('reduced').checked = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+
+    function node(tag, attributes, text) {
+      const element = document.createElementNS(NS, tag);
+
+      Object.entries(attributes).forEach(([key, value]) => {
+        element.setAttribute(key, value);
+      });
+
+      if (text) {
+        element.textContent = text;
+      }
+
+      $('scene').append(element);
+      return element;
+    }
+
+    function rect(x, y, width, height, label, fill = '#dfd0ef') {
+      node('rect', {
+        x,
+        y,
+        width,
+        height,
+        rx: 5,
+        fill,
+        stroke: '#6a567b'
+      });
+
+      node('text', {
+        x: x + 8,
+        y: y + 24
+      }, label);
+    }
+
+    function person(x, y, label, color = '#501d82') {
+      node('circle', {
+        cx: x,
+        cy: y,
+        r: 15,
+        fill: color
+      });
+
+      node('text', {
+        x: x - 8,
+        y: y + 5,
+        style: 'fill:white;font-size:12px'
+      }, label);
+    }
+
+    function path(d) {
+      node('path', {
+        d,
+        stroke: '#a25225',
+        'stroke-width': 4,
+        'stroke-dasharray': '8 7',
+        fill: 'none'
+      });
+    }
+
+    function draw() {
+      const p = Math.min(t / 8, 1);
+      $('scene').replaceChildren();
+
+      if (index === 0) {
+        rect(399, 190, 105, 65, 'Ball bin', '#f8d477');
+
+        path('M130 110L430 225M740 340L470 225');
+
+        for (let k = 0; k < 3; k++) {
+          person(
+            130 + 280 * p - k * 19,
+            110 + 95 * p + k * 25,
+            'A'
+          );
+
+          person(
+            740 - 260 * p + k * 19,
+            340 - 95 * p - k * 25,
+            'B',
+            '#16747b'
+          );
+        }
+
+        node('text', {
+          x: 70,
+          y: 390
+        }, 'One shared collection point');
+      }
+
+      if (index === 1) {
+        rect(655, 80, 160, 85, 'Station');
+        rect(600, 175, 150, 35, 'Bench', '#f1bf94');
+        rect(720, 220, 80, 100, 'Mat', '#bedbdf');
+
+        node('text', {
+          x: 770,
+          y: 405
+        }, 'EXIT');
+
+        path('M130 250H620L700 125M690 300L800 390');
+
+        const x = 130 + 420 * p;
+
+        node('circle', {
+          cx: x,
+          cy: 260,
+          r: 22,
+          fill: 'none',
+          stroke: '#501d82',
+          'stroke-width': 4
+        });
+
+        node('path', {
+          d: `M${x - 5} 230v25h24l12 20`,
+          fill: 'none',
+          stroke: '#501d82',
+          'stroke-width': 5
+        });
+
+        node('circle', {
+          cx: x - 5,
+          cy: 219,
+          r: 9,
+          fill: '#501d82'
+        });
+
+        node('text', {
+          x: 70,
+          y: 390
+        }, 'Equipment blocks participation and the exit route');
+      }
+
+      if (index === 2) {
+        rect(85, 230, 160, 90, 'Station 1');
+        rect(530, 65, 240, 85, 'Ball activity');
+
+        person(110, 355, 'T', '#14766d');
+
+        node('text', {
+          x: 70,
+          y: 390
+        }, 'Teacher focused here');
+
+        path('M470 190H820M650 145V370');
+
+        person(475 + 320 * p, 190, 'S');
+
+        node('circle', {
+          cx: 650,
+          cy: 150 + 215 * p,
+          r: 10,
+          fill: '#bd5b25'
+        });
+
+        node('text', {
+          x: 520,
+          y: 350
+        }, 'Student route crosses ball path');
+      }
+
+      $('progress').value = t;
+    }
+
+    function stop() {
+      running = false;
+      cancelAnimationFrame(frame);
+      $('pause').disabled = true;
+      $('play').disabled = false;
+    }
+
+    function reveal() {
+      stop();
+      $('questions').hidden = false;
+      $('play').textContent = 'Replay scene';
+    }
+
+    function tick(now) {
+      if (!running) return;
+
+      if (last) {
+        t += Math.min((now - last) / 1000, 0.1);
+      }
+
+      last = now;
+      draw();
+
+      if (t >= 8) {
+        t = 8;
+        draw();
+        reveal();
+      } else {
+        frame = requestAnimationFrame(tick);
+      }
+    }
+
+    function play() {
+      if ($('reduced').checked) {
+        t = 8;
+        draw();
+        reveal();
+        return;
+      }
+
+      if (t >= 8) {
+        t = 0;
+      }
+
+      running = true;
+      last = 0;
+      $('pause').disabled = false;
+      $('play').disabled = true;
+      frame = requestAnimationFrame(tick);
+    }
+
+    function load() {
+      stop();
+      t = 0;
+
+      const scene = scenes[index];
+
+      $('step').textContent = `SCENE ${index + 1} OF 3`;
+      $('title').textContent = scene.title;
+      $('caption').textContent = scene.description;
+      $('transcript').textContent = scene.description;
+      $('svgdesc').textContent = scene.description;
+      $('question').textContent = scene.q;
+
+      $('questions').hidden = true;
+      $('feedback').hidden = true;
+      $('next').hidden = true;
+
+      $('choices').replaceChildren();
+
+      scene.choices.forEach((text, choiceIndex) => {
+        const button = document.createElement('button');
+
+        button.className = 'choice';
+        button.textContent =
+          String.fromCharCode(65 + choiceIndex) + '. ' + text;
+
+        button.onclick = () => choose(choiceIndex);
+        $('choices').append(button);
+      });
+
+      $('play').textContent = 'Play scene';
+      draw();
+    }
+
+    function choose(choiceIndex) {
+      const scene = scenes[index];
+      answers[index] = choiceIndex;
+
+      [...$('choices').children].forEach((button, j) => {
+        button.classList.toggle('chosen', j === choiceIndex);
+        button.setAttribute(
+          'aria-pressed',
+          String(j === choiceIndex)
+        );
+      });
+
+      const introduction =
+        choiceIndex === scene.best
+          ? 'Strong choice. '
+          : 'Consider this. ';
+
+      $('feedback').textContent =
+        introduction +
+        scene.feedback[choiceIndex] +
+        ' Design transfer: ' +
+        scene.redesign;
+
+      $('feedback').hidden = false;
+      $('next').hidden = false;
+
+      $('next').textContent =
+        index === 2
+          ? 'Review my decisions'
+          : 'Next scene';
+    }
+
+    $('play').onclick = play;
+    $('pause').onclick = stop;
+
+    $('replay').onclick = () => {
+      stop();
+      t = 0;
+      draw();
+      play();
+    };
+
+    $('skip').onclick = () => {
+      t = 8;
+      draw();
+      reveal();
+    };
+
+    $('reduced').onchange = () => {
+      if (running) {
+        t = 8;
+        draw();
+        reveal();
+      }
+    };
+
+    $('next').onclick = () => {
+      if (index < 2) {
+        index++;
+        load();
+
+        $('title').scrollIntoView({
+          behavior: 'auto',
+          block: 'start'
+        });
+      } else {
+        stop();
+        $('questions').hidden = true;
+        $('finish').hidden = false;
+        $('results').replaceChildren();
+
+        scenes.forEach((scene, i) => {
+          const paragraph = document.createElement('p');
+
+          paragraph.textContent =
+            scene.title +
+            ' — Your choice: ' +
+            scene.choices[answers[i]] +
+            ' ' +
+            scene.feedback[answers[i]];
+
+          $('results').append(paragraph);
+        });
+
+        $('finish').scrollIntoView({
+          behavior: 'auto',
+          block: 'start'
+        });
+      }
+    };
+
+    $('download').onclick = () => {
+      const decisions = scenes.map((scene, i) => {
+        return (
+          scene.title +
+          '\nChoice: ' +
+          scene.choices[answers[i]] +
+          '\nFeedback: ' +
+          scene.feedback[answers[i]]
+        );
+      }).join('\n\n');
+
+      const text =
+        'PEPROF 222 | Safety & Space Management\n' +
+        'Name: ' + $('name').value +
+        '\n\n' + decisions +
+        '\n\nMy redesign:\n' + $('reflection').value +
+        '\n\nMy directions:\n' + $('cue').value;
+
+      const blob = new Blob([text], {
+        type: 'text/plain;charset=utf-8'
+      });
+
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+
+      link.href = url;
+      link.download = 'Roseman_Safety_Responses.txt';
+      link.click();
+
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    };
+
+    $('print').onclick = () => window.print();
+
+    $('restart').onclick = () => {
+      const confirmed = confirm(
+        'Start over? Download your responses first to keep them.'
+      );
+
+      if (confirmed) {
+        answers = [];
+        index = 0;
+        $('finish').hidden = true;
+        $('reflection').value = '';
+        $('cue').value = '';
+        load();
+      }
+    };
+
+    load();
+  </script>
+</body>
+</html>

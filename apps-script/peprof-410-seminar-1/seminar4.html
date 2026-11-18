@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PEPROF 410 | Seminar Meeting 4</title>
+
+<style>
+:root{
+  --purple:#4B2E83;
+  --purple-dark:#35205f;
+  --gold:#E6B800;
+  --lavender:#F6F4FA;
+  --cream:#FFF7DF;
+  --text:#222;
+  --white:#fff;
+  --border:#ddd;
+}
+*{box-sizing:border-box}
+html,body{
+  margin:0;height:100%;
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--text);background:#eeeaf4
+}
+button{font:inherit}
+button:focus{outline:4px solid var(--gold);outline-offset:3px}
+#app{height:100vh;display:flex;flex-direction:column}
+.topbar{
+  background:var(--purple);color:white;padding:10px 20px;
+  display:flex;align-items:center;gap:18px;min-height:55px
+}
+.course-name{font-weight:700;white-space:nowrap}
+.progress-wrap{
+  flex:1;height:8px;background:rgba(255,255,255,.25);
+  border-radius:20px;overflow:hidden
+}
+#progressBar{height:100%;background:var(--gold)}
+.slide-count{font-size:.9rem;white-space:nowrap}
+.presentation{flex:1;overflow:auto}
+.slide{
+  display:none;min-height:calc(100vh - 120px);
+  padding:50px max(6vw,40px) 70px;background:white
+}
+.slide.active{display:block}
+.slide-inner{max-width:1100px;margin:auto}
+.eyebrow{
+  color:var(--purple);text-transform:uppercase;letter-spacing:.08em;
+  font-size:.85rem;font-weight:bold;margin-bottom:10px
+}
+h1{
+  color:var(--purple);font-size:clamp(2.4rem,5vw,4.6rem);
+  line-height:1.05;margin:.1em 0 .25em
+}
+h2{color:var(--purple);font-size:clamp(1.7rem,3vw,2.6rem)}
+h3{color:var(--purple)}
+.lead{
+  font-size:clamp(1.25rem,2vw,1.65rem);
+  line-height:1.5;max-width:900px
+}
+.big{
+  font-size:clamp(1.7rem,3vw,2.7rem);
+  line-height:1.35;font-weight:700;color:var(--purple)
+}
+.gold-line{
+  width:90px;height:7px;background:var(--gold);
+  border-radius:20px;margin:25px 0
+}
+.card-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:18px;margin-top:25px
+}
+.card{
+  border:1px solid var(--border);
+  border-radius:12px;padding:22px;background:white
+}
+.card.gold{background:var(--cream);border:2px solid var(--gold)}
+.card.purple{background:var(--lavender);border-left:6px solid var(--purple)}
+.large-list{font-size:1.22rem;line-height:1.6}
+.large-list li{margin-bottom:11px}
+.callout{
+  background:var(--cream);border:2px solid var(--gold);
+  border-radius:12px;padding:25px;margin:25px 0;font-size:1.2rem
+}
+.timer-box{
+  margin:30px 0;padding:25px;background:var(--lavender);
+  border-radius:14px;text-align:center;border:2px solid var(--purple)
+}
+.timer-display{
+  font-size:clamp(3rem,8vw,6rem);font-weight:700;
+  color:var(--purple);font-variant-numeric:tabular-nums
+}
+.timer-controls{
+  display:flex;justify-content:center;gap:10px;
+  flex-wrap:wrap;margin-top:15px
+}
+.timer-controls button{
+  border:0;border-radius:7px;padding:10px 17px;
+  background:var(--purple);color:white;font-weight:bold;cursor:pointer
+}
+.timer-controls .secondary{background:#555}
+.notes{
+  display:none;margin-top:35px;background:#fffbea;
+  border:2px dashed #b98f00;padding:22px;border-radius:10px
+}
+body.show-notes .notes{display:block}
+.notes h3{color:#6b5200}
+.controls{
+  background:white;border-top:1px solid var(--border);
+  padding:10px 18px;display:flex;justify-content:space-between;gap:10px
+}
+.control-group{display:flex;gap:8px;flex-wrap:wrap}
+.controls button{
+  border:0;border-radius:7px;padding:9px 15px;
+  font-weight:bold;cursor:pointer
+}
+.primary{background:var(--purple);color:white}
+.secondary{background:#ececec}
+.gold-button{background:var(--gold)}
+.hero{
+  background:linear-gradient(135deg,var(--purple),var(--purple-dark));
+  color:white
+}
+.hero h1,.hero h2,.hero .eyebrow{color:white}
+.break-slide{background:var(--cream)}
+.final-slide{background:var(--purple);color:white}
+.final-slide h1,.final-slide h2{color:white}
+@media(max-width:700px){
+  .slide{padding:30px 22px 60px}
+  .course-name{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  *{transition:none!important}
+}
+</style>
+</head>
+
+<body>
+<div id="app">
+
+<header class="topbar">
+  <div class="course-name">PEPROF 410 | Seminar 4</div>
+  <div class="progress-wrap"><div id="progressBar"></div></div>
+  <div id="slideCount" class="slide-count"></div>
+</header>
+
+<main class="presentation">
+
+<!-- 1 -->
+<section class="slide hero active">
+<div class="slide-inner">
+
+<div class="eyebrow">PEPROF 410 | Seminar Meeting 4</div>
+
+<h1>🏁 Finish Together</h1>
+<h2>Our Final Live Seminar</h2>
+
+<div class="gold-line"></div>
+
+<p class="lead">
+Think about the person who logged into our first seminar in September.
+</p>
+
+<p class="lead">
+You've taught more. Failed at more things. Fixed more things.
+Asked better questions. Developed stronger opinions.
+</p>
+
+<div class="callout" style="color:#222;">
+<strong>Tonight:</strong> Use your people, recognize your growth,
+and prepare for the final stretch.
+</div>
+
+<div class="notes">
+<h3>🔒 Instructor Notes</h3>
+<p><strong>5:00–5:07.</strong></p>
+<p>Keep the opening reflective but not sentimental yet. The payoff comes later.</p>
+<p>Tell students explicitly that tonight's live Huddle participation satisfies the Round 6 peer-response requirement.</p>
+</div>
+
+</div>
+</section>
+
+<!-- 2 -->
+<section class="slide">
+<div class="slide-inner">
+
+<div class="eyebrow">Important</div>
+
+<h1>🤝 Tonight Counts.</h1>
+
+<div class="callout">
+<strong>Your active participation in tonight's Huddle Team collaboration
+satisfies the Round 6 Team Huddle peer-response requirement.</strong>
+</div>
+
+<p class="lead">
+If you participate tonight, you do <strong>not</strong> need to complete
+an additional Canvas peer response for Round 6.
+</p>
+
+<p class="lead">
+The point isn't to check a discussion-board box. The point is to
+<strong>actually use another educator's thinking.</strong>
+</p>
+
+<div class="notes">
+<h3>🔒 Instructor Notes</h3>
+<p>Make this completely clear before the activities begin.</p>
+<p>Record attendance carefully because it affects the Round 6 peer-response requirement.</p>
+</div>
+
+</div>
+</section>
+
+<!-- 3 -->
+<section class="slide">
+<div class="slide-inner">
+
+<div class="eyebrow">Quick Hit</div>
+
+<h1>🌱 September You vs. December You</h1>
+
+<p class="big">
+What feels normal now that would have intimidated you in September?
+</p>
+
+<div class="card-grid">
+
+<div class="card purple">
+<h3>Teaching</h3>
+<p>Something you can now do without overthinking every step.</p>
+</div>
+
+<div class="card">
+<h3>Students</h3>
+<p>Something you understand differently about learners.</p>
+</div>
+
+<div class="card gold">
+<h3>Problems</h3>
+<p>Something you now know how to respond to.</p>
+</div>
+
+<div class="card">
+<h3>Yourself</h3>
+<p>Something you've learned about the teacher you're becoming.</p>
+</div>
+
+</div>
+
+<div class="notes">
+<h3>🔒 Instructor Notes</h3>
+<p><strong>5:07–5:15.</strong></p>
+<p>Students can think quietly first. Invite a few volunteers rather than requiring everyone to chat.</p>
+</div>
+
+</div>
+</section>
+
+<!-- 4 -->
+<section class="slide">
+<div class="slide-inner">
+
+<div class="eyebrow">Coach's Corner</div>
+
+<h1>You're Close. Don't Go Solo Now.</h1>
+
+<div class="gold-line"></div>
+
+<ul class="large-list">
+<li>December creates artificial urgency.</li>
+<li>Not everything needs to happen today.</li>
+<li>Use your CT, supervisor, classmates and other professionals.</li>
+<li>Ask specific questions instead of silently struggling.</li>
+<li>Finish your placement as professionally as you started it.</li>
+</ul>
+
+<div class="callout">
+<strong>MUST DO → SHOULD DO → CAN WAIT</strong>
+</div>
+
+<div class="notes">
+<h3>🔒 Instructor Notes</h3>
+<p><strong>5:15–5:23.</strong></p>
+<p>Give only current announcements that genuinely need synchronous airtime.</p>
+<p>Briefly preview the final sequence: Round 7, Semi-Final, Round 8, Championship, then Overtime.</p>
+</div>
+
+</div>
+</section>
+
+<!-- 5 -->
+<section class="slide">
+<div class="slide-inner">
+
+<div class="eyebrow">Interaction 1</div>
+
+<h1>🤝 Help Me Think This Through</h1>
+
+<p class="lead">
+Bring one real professional situation to your Huddle Team.
+</p>
+
+<div class="card gold">
+
+<h2>Ask Before You Solve.</h2>
+
+<ul class="large-list">
+<li>What is actually happening?</li>
+<li>What have you already tried?</li>
+<li>What are you trying to figure out?</li>
+<li>What information might still be missing?</li>
+</ul>
+
+</div>
+
+<p class="lead">
+Then offer another perspective, a useful question, a realistic strategy,
+or another professional who might help.
+</p>
+
+<div class="timer-box" data-seconds="900">
+<div class="timer-display">15:00</div>
+
+<div class="timer-controls">
+<button class="timer-start">Start</button>
+<button class="timer-pause secondary">Pause</button>
+<button class="timer-reset secondary">Reset</button>
+</div>
+</div>
+
+<div class="notes">
+<h3>🔒 Instructor Notes</h3>
+
+<p><strong>5:23–5:38.</strong></p>
+
+<p>Same Huddle Teams. Aim for about 3–4 minutes per person.</p>
+
+<p>Tell students:</p>
+
+<p>
+“Don't use names or identifying details. And don't immediately solve the person's problem.
+Ask enough questions to understand it first.”
+</p>
+
+<p>Broadcast with 3 minutes remaining: “Make sure everyone has had a turn.”</p>
+
+</div>
+
+</div>
+</section>
+
+<!-- 6 -->
+<section class="slide">
+<div class="slide-inner">
+
+<div class="eyebrow">Debrief</div>
+
+<h1>Good Collaboration Changes Your Thinking.</h1>
+
+<p class="big">
+It doesn't always give you an answer.
+</p>
+
+<div class="gold-line"></div>
+
+<p class="lead">
+Did someone ask you a question, offer a perspective,
+or identify a resource you hadn't considered?
+</p>
+
+<div class="notes">
+<h3>🔒 Instructor Notes</h3>
+
+<p><strong>5:38–5:43.</strong></p>
+
+<p>Take 2–3 examples only.</p>
+
+<p>Do not ask students to disclose the entire situation publicly.</p>
+
+</div>
+
+</div>
+</section>
+
+<!-- 7 -->
+<section class="slide break-slide">
+<div class="slide-inner">
+
+<div class="eyebrow">Halftime</div>
+
+<h1>🚶 5-Minute Reset</h1>
+
+<p class="big">
+Stand up. Stretch. Food. Water. Reset.
+</p>
+
+<div class="timer-box" data-seconds="300">
+
+<div class="timer-display">05:00</div>
+
+<div class="timer-controls">
+<button class="timer-start">Start</button>
+<button class="timer-pause secondary">Pause</button>
+<button class="timer-reset secondary">Reset</button>
+</div>
+
+</div>
+
+<div class="notes">
+<h3>🔒 Instructor Notes</h3>
+<p><strong>5:43–5:48.</strong></p>
+<p>Actually give them the break.</p>
+</div>
+
+</div>
+</section>
+
+<!-- 8 -->
+<section class="slide">
+<div class="slide-inner">
+
+<div class="eyebrow">Professional Network</div>
+
+<h1>🧭 Who Would You Call?</h1>
+
+<p class="lead">
+Good teachers don't know everything.
+They get better at knowing <strong>where different kinds of expertise live.</strong>
+</p>
+
+<div class="card-grid">
+
+<div class="card purple">
+<h3>Teaching Problem</h3>
+<p>Who understands the students, curriculum or setting?</p>
+</div>
+
+<div class="card">
+<h3>Student Support</h3>
+<p>Who has expertise beyond your role?</p>
+</div>
+
+<div class="card gold">
+<h3>Placement Concern</h3>
+<p>Who has responsibility and authority to help?</p>
+</div>
+
+<div class="card">
+<h3>Career Question</h3>
+<p>Who has experience worth borrowing?</p>
+</div>
+
+</div>
+
+<div class="notes">
+<h3>🔒 Instructor Notes</h3>
+
+<p><strong>5:48–5:55.</strong></p>
+
+<p>Instructor-led setup for the next activity.</p>
+
+<p>Emphasize that “asking for help” is too generic. Professional judgment includes identifying the right source of expertise.</p>
+
+</div>
+
+</div>
+</section>
+
+<!-- 9 -->
+<section class="slide">
+<div class="slide-inner">
+
+<div class="eyebrow">Interaction 2</div>
+
+<h1>🏟️ Who Would You Call First?</h1>
+
+<div class="card-grid">
+
+<div class="card">
+<h3>Situation A</h3>
+<p>A student consistently struggles to access an activity despite several adaptations you've tried.</p>
+</div>
+
+<div class="card">
+<h3>Situation B</h3>
+<p>Your CT gives you feedback that you don't completely understand or agree with.</p>
+</div>
+
+<div class="card">
+<h3>Situation C</h3>
+<p>You're unsure whether something a student disclosed requires an official response.</p>
+</div>
+
+<div class="card">
+<h3>Situation D</h3>
+<p>You're comparing two job opportunities and don't know what questions you should be asking.</p>
+</div>
+
+</div>
+
+<h2>For each:</h2>
+
+<ul class="large-list">
+<li>Who might you contact?</li>
+<li>Why that person?</li>
+<li>What would you ask?</li>
+</ul>
+
+<div class="timer-box" data-seconds="480">
+
+<div class="timer-display">08:00</div>
+
+<div class="timer-controls">
+<button class="timer-start">Start</button>
+<button class="timer-pause secondary">Pause</button>
+<button class="timer-reset secondary">Reset</button>
+</div>
+
+</div>
+
+<div class="notes">
+<h3>🔒 Instructor Notes</h3>
+
+<p><strong>5:55–6:03.</strong></p>
+
+<p>Huddle Teams can divide the scenarios or discuss all four.</p>
+
+<p>
+For Situation C, do NOT turn this into a mandatory-reporting trivia exercise.
+The intended learning is that some situations require current official procedures
+and responsible professionals rather than independent judgment or peer advice.
+</p>
+
+</div>
+
+</div>
+</section>
+
+<!-- 10 -->
+<section class="slide">
+<div class="slide-inner">
+
+<div class="eyebrow">Debrief</div>
+
+<h1>The Right Person Depends on the Problem.</h1>
+
+<div class="card-grid">
+
+<div class="card purple">
+<h3>CT / Colleague</h3>
+<p>Immediate teaching context and practical experience.</p>
+</div>
+
+<div class="card">
+<h3>Specialist</h3>
+<p>Special educator, APE professional, counselor, nurse, psychologist, OT/PT or another relevant professional.</p>
+</div>
+
+<div class="card gold">
+<h3>Supervisor / Administrator</h3>
+<p>Placement, policy, serious concerns and situations requiring responsibility or authority.</p>
+</div>
+
+<div class="card">
+<h3>Professional Network</h3>
+<p>Career decisions, resources, mentorship and another perspective.</p>
+</div>
+
+</div>
+
+<div class="callout">
+<strong>Professional judgment isn't knowing every answer.</strong><br>
+Sometimes it's recognizing that the answer belongs with someone else.
+</div>
+
+<div class="notes">
+<h3>🔒 Instructor Notes</h3>
+
+<p><strong>6:03–6:10.</strong></p>
+
+<p>Take a few responses and clarify where necessary.</p>
+
+</div>
+
+</div>
+</section>
+
+<!-- 11 -->
+<section class="slide">
+<div class="slide-inner">
+
+<div class="eyebrow">Look Back</div>
+
+<h1>🌱 Then vs. Now</h1>
+
+<div class="callout">
+
+<p class="big" style="margin-top:0;">
+When I started student teaching, I...
+</p>
+
+<p class="big">
+Now I...
+</p>
+
+</div>
+
+<p class="lead">
+Think beyond skills.
+</p>
+
+<ul class="large-list">
+<li>What do you notice now?</li>
+<li>How do you make decisions differently?</li>
+<li>What questions do you ask?</li>
+<li>How do you respond when something goes wrong?</li>
+<li>When do you know to ask someone else for help?</li>
+</ul>
+
+<div class="notes">
+<h3>🔒 Instructor Notes</h3>
+
+<p><strong>6:10–6:18.</strong></p>
+
+<p>Give students some quiet thinking time.</p>
+
+<p>Invite sharing, but don't require it.</p>
+
+</div>
+
+</div>
+</section>
+
+<!-- 12 -->
+<section class="slide">
+<div class="slide-inner">
+
+<div class="eyebrow">Your Network</div>
+
+<h1>🌐 Don't Lose Your People.</h1>
+
+<p class="lead">
+Think about the people you've met during student teaching.
+</p>
+
+<div class="card-grid">
+
+<div class="card">
+<h3>Whose judgment do you trust?</h3>
+</div>
+
+<div class="card purple">
+<h3>Who makes you think better?</h3>
+</div>
+
+<div class="card gold">
+<h3>Who might you call six months from now?</h3>
+</div>
+
+<div class="card">
+<h3>Who should you thank before you leave?</h3>
+</div>
+
+</div>
+
+<div class="callout">
+Professional relationships don't automatically survive the end of a placement.
+<strong>Notice which ones are worth maintaining.</strong>
+</div>
+
+<div class="notes">
+<h3>🔒 Instructor Notes</h3>
+
+<p><strong>6:18–6:23.</strong></p>
+
+<p>
+This can include CTs, supervisors, colleagues, classmates, specialists,
+administrators or other mentors.
+</p>
+
+</div>
+
+</div>
+</section>
+
+<!-- 13 -->
+<section class="slide">
+<div class="slide-inner">
+
+<div class="eyebrow">Final Seminar Next Play</div>
+
+<h1>🎯 What Do You Need for the Final Stretch?</h1>
+
+<div class="card-grid">
+
+<div class="card purple">
+<h2>FROM YOURSELF</h2>
+<p>One thing you need to prioritize.</p>
+</div>
+
+<div class="card gold">
+<h2>FROM YOUR PEOPLE</h2>
+<p>One person you need to use as a resource.</p>
+</div>
+
+<div class="card purple">
+<h2>FOR YOUR PLACEMENT</h2>
+<p>One thing you want to finish professionally.</p>
+</div>
+
+<div class="card gold">
+<h2>FOR FUTURE YOU</h2>
+<p>One thing worth saving or remembering.</p>
+</div>
+
+</div>
+
+<p class="lead">
+No submission. Put it somewhere you'll actually see it.
+</p>
+
+<div class="notes">
+<h3>🔒 Instructor Notes</h3>
+
+<p><strong>6:23–6:28.</strong></p>
+
+<p>Quiet individual reflection. Do not require a report-out.</p>
+
+</div>
+
+</div>
+</section>
+
+<!-- 14 -->
+<section class="slide final-slide">
+<div class="slide-inner">
+
+<div class="eyebrow">Final Live Seminar</div>
+
+<h1>💜 Finish Together.</h1>
+
+<div class="gold-line"></div>
+
+<p class="big" style="color:white;">
+You came into this semester with classmates.
+</p>
+
+<p class="big" style="color:white;">
+Leave with people you can call.
+</p>
+
+<p class="lead">
+Keep going. You're close.
+</p>
+
+<div class="notes">
+<h3>🔒 Instructor Notes</h3>
+
+<p><strong>6:28–6:30.</strong></p>
+
+<p>Thank them. End on time.</p>
+
+<p>
+Remind them: Round 6 → Round 7 → Semi-Final → Round 8 → Championship.
+</p>
+
+</div>
+
+</div>
+</section>
+
+</main>
+
+<footer class="controls">
+
+<div class="control-group">
+<button id="prevBtn" class="secondary">← Previous</button>
+<button id="nextBtn" class="primary">Next →</button>
+</div>
+
+<div class="control-group">
+<button id="notesBtn" class="gold-button">🔒 Instructor Notes</button>
+<button id="fullscreenBtn" class="secondary">⛶ Full Screen</button>
+</div>
+
+</footer>
+
+</div>
+
+<script>
+const slides=[...document.querySelectorAll(".slide")];
+let currentSlide=0;
+
+const progressBar=document.getElementById("progressBar");
+const slideCount=document.getElementById("slideCount");
+
+function showSlide(i){
+  if(i<0||i>=slides.length)return;
+
+  slides[currentSlide].classList.remove("active");
+  currentSlide=i;
+  slides[i].classList.add("active");
+
+  progressBar.style.width=((i+1)/slides.length*100)+"%";
+  slideCount.textContent=(i+1)+" / "+slides.length;
+
+  document.querySelector(".presentation").scrollTo(0,0);
+}
+
+document.getElementById("nextBtn").onclick=()=>showSlide(currentSlide+1);
+document.getElementById("prevBtn").onclick=()=>showSlide(currentSlide-1);
+
+document.addEventListener("keydown",e=>{
+  if(e.key==="ArrowRight"||e.key==="PageDown"){
+    showSlide(currentSlide+1);
+  }
+
+  if(e.key==="ArrowLeft"||e.key==="PageUp"){
+    showSlide(currentSlide-1);
+  }
+});
+
+document.getElementById("notesBtn").onclick=function(){
+  document.body.classList.toggle("show-notes");
+
+  this.textContent=
+    document.body.classList.contains("show-notes")
+    ? "🔓 Hide Instructor Notes"
+    : "🔒 Instructor Notes";
+};
+
+document.getElementById("fullscreenBtn").onclick=async()=>{
+  try{
+    if(!document.fullscreenElement){
+      await document.documentElement.requestFullscreen();
+    }else{
+      await document.exitFullscreen();
+    }
+  }catch(e){}
+};
+
+document.querySelectorAll(".timer-box").forEach(box=>{
+
+  const display=box.querySelector(".timer-display");
+  const initial=Number(box.dataset.seconds);
+
+  let remaining=initial;
+  let interval=null;
+
+  const formatTime=s=>
+    String(Math.floor(s/60)).padStart(2,"0")+
+    ":"+
+    String(s%60).padStart(2,"0");
+
+  function update(){
+    display.textContent=formatTime(remaining);
+
+    display.style.color=
+      remaining<=120
+      ? "#8A2D2D"
+      : "#4B2E83";
+  }
+
+  box.querySelector(".timer-start").onclick=()=>{
+
+    if(interval)return;
+
+    interval=setInterval(()=>{
+
+      if(remaining>0){
+        remaining--;
+        update();
+      }else{
+        clearInterval(interval);
+        interval=null;
+      }
+
+    },1000);
+  };
+
+  box.querySelector(".timer-pause").onclick=()=>{
+    clearInterval(interval);
+    interval=null;
+  };
+
+  box.querySelector(".timer-reset").onclick=()=>{
+    clearInterval(interval);
+    interval=null;
+    remaining=initial;
+    update();
+  };
+
+  update();
+});
+
+showSlide(0);
+</script>
+
+</body>
+</html>

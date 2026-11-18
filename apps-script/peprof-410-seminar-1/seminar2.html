@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PEPROF 410 | Seminar Meeting 2</title>
+
+<style>
+:root{
+  --purple:#4B2E83;--purple-dark:#35205f;--gold:#E6B800;
+  --lavender:#F6F4FA;--cream:#FFF7DF;--text:#222;
+  --muted:#666;--white:#fff;--border:#ddd;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:#eeeaf4}
+button{font:inherit}
+button:focus{outline:4px solid var(--gold);outline-offset:3px}
+#app{height:100vh;display:flex;flex-direction:column}
+.topbar{background:var(--purple);color:white;padding:10px 20px;display:flex;align-items:center;gap:18px;min-height:55px}
+.course-name{font-weight:700;white-space:nowrap}
+.progress-wrap{flex:1;height:8px;background:rgba(255,255,255,.25);border-radius:20px;overflow:hidden}
+#progressBar{height:100%;width:0;background:var(--gold)}
+.slide-count{font-size:.9rem;white-space:nowrap}
+.presentation{flex:1;position:relative;overflow:auto}
+.slide{display:none;min-height:calc(100vh - 120px);padding:50px max(6vw,40px) 70px;background:white}
+.slide.active{display:block}
+.slide-inner{max-width:1100px;margin:auto}
+.eyebrow{color:var(--purple);text-transform:uppercase;letter-spacing:.08em;font-size:.85rem;font-weight:bold;margin-bottom:10px}
+h1{color:var(--purple);font-size:clamp(2.4rem,5vw,4.6rem);line-height:1.05;margin:.1em 0 .25em}
+h2{color:var(--purple);font-size:clamp(1.7rem,3vw,2.6rem);margin:.4em 0 .7em}
+h3{color:var(--purple);font-size:1.35rem}
+.lead{font-size:clamp(1.25rem,2vw,1.65rem);line-height:1.5;max-width:900px}
+.big{font-size:clamp(1.7rem,3vw,2.7rem);line-height:1.35;font-weight:700;color:var(--purple)}
+.gold-line{width:90px;height:7px;background:var(--gold);border-radius:20px;margin:25px 0}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;margin-top:25px}
+.card{border:1px solid var(--border);border-radius:12px;padding:22px;background:white}
+.card.gold{background:var(--cream);border:2px solid var(--gold)}
+.card.purple{background:var(--lavender);border-left:6px solid var(--purple)}
+.card h3{margin-top:0}
+.large-list{font-size:1.22rem;line-height:1.6}
+.large-list li{margin-bottom:11px}
+.callout{background:var(--cream);border:2px solid var(--gold);border-radius:12px;padding:25px;margin:25px 0;font-size:1.2rem}
+.timer-box{margin:30px 0;padding:25px;background:var(--lavender);border-radius:14px;text-align:center;border:2px solid var(--purple)}
+.timer-display{font-size:clamp(3rem,8vw,6rem);font-weight:700;color:var(--purple);font-variant-numeric:tabular-nums}
+.timer-controls{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:15px}
+.timer-controls button{border:0;border-radius:7px;padding:10px 17px;cursor:pointer;background:var(--purple);color:white;font-weight:bold}
+.timer-controls .secondary{background:#555}
+.notes{display:none;margin-top:35px;background:#fffbea;border:2px dashed #b98f00;padding:22px;border-radius:10px}
+body.show-notes .notes{display:block}
+.notes h3{color:#6b5200;margin-top:0}
+.controls{background:white;border-top:1px solid var(--border);padding:10px 18px;display:flex;justify-content:space-between;gap:10px}
+.control-group{display:flex;gap:8px;flex-wrap:wrap}
+.controls button{border:0;border-radius:7px;padding:9px 15px;cursor:pointer;font-weight:bold}
+.primary{background:var(--purple);color:white}.secondary{background:#ececec}.gold-button{background:var(--gold)}
+.hero{background:linear-gradient(135deg,var(--purple),var(--purple-dark));color:white}
+.hero h1,.hero h2,.hero .eyebrow{color:white}
+.final-slide{background:var(--purple);color:white}.final-slide h1,.final-slide h2{color:white}
+.break-slide{background:var(--cream)}
+@media(max-width:700px){.slide{padding:30px 22px 60px}.course-name{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+
+<body>
+<div id="app">
+
+<header class="topbar">
+  <div class="course-name">PEPROF 410 | Seminar 2</div>
+  <div class="progress-wrap"><div id="progressBar"></div></div>
+  <div id="slideCount" class="slide-count"></div>
+</header>
+
+<main class="presentation">
+
+<section class="slide hero active">
+<div class="slide-inner">
+<div class="eyebrow">PEPROF 410 | Seminar Meeting 2</div>
+<h1>🏟️ Midseason Check-In</h1>
+<h2>Where Are You Now?</h2>
+<div class="gold-line"></div>
+<p class="lead">You have enough student-teaching experience now to have opinions. Excellent.</p>
+<div class="callout" style="color:#222">
+<strong>Optional chat:</strong> Describe student teaching so far in exactly <strong>three words.</strong>
+</div>
+<div class="notes">
+<h3>🔒 Instructor Notes</h3>
+<p><strong>5:00–5:07.</strong> Let responses populate. Pull out contrasts without analyzing everyone.</p>
+<p>Ask: “Who used a word you absolutely would not have chosen in September?” Take 2–3 responses.</p>
+</div>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+<div class="eyebrow">Midseason Reality Check</div>
+<h1>You Should Have More Questions Now.</h1>
+<p class="big">That is not a problem.</p>
+<div class="gold-line"></div>
+<ul class="large-list">
+<li>You have enough experience to notice more.</li>
+<li>Your questions should be getting more specific.</li>
+<li>You are developing opinions about teaching.</li>
+<li>You are beginning to recognize what you still need to learn.</li>
+</ul>
+<div class="notes">
+<h3>🔒 Instructor Notes</h3>
+<p><strong>5:07–5:15.</strong> Brief Coach's Corner. Add current placement patterns or administrative reminders.</p>
+<p>Don't turn this into a second orientation lecture.</p>
+</div>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+<div class="eyebrow">Special Guest</div>
+<h1>🎓 Licensing Locker Room</h1>
+<h2>Welcome, Gretchen</h2>
+<p class="lead">Let's talk about what actually happens between finishing student teaching and becoming a licensed teacher.</p>
+
+<div class="card-grid">
+<div class="card purple"><h3>Before Graduation</h3><p>What do students need to complete?</p></div>
+<div class="card"><h3>UWW's Role</h3><p>What happens with endorsement/recommendation?</p></div>
+<div class="card"><h3>Your Role</h3><p>What does the graduate actually have to do?</p></div>
+<div class="card gold"><h3>Don't Get Stuck</h3><p>What commonly delays the process?</p></div>
+</div>
+
+<div class="callout">
+<strong>Bring your questions.</strong> This is your chance to ask the person who knows the UWW side of the process.
+</div>
+
+<div class="notes">
+<h3>🔒 Instructor Notes</h3>
+<p><strong>5:15–5:35 | approximately 20 minutes.</strong></p>
+<p>Aim for 12–15 minutes of Gretchen's explanation + 5–8 minutes of student questions.</p>
+<p>Prompt if useful: outside Wisconsin, endorsement timing, common mistakes, what students should do now.</p>
+</div>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+<div class="eyebrow">Interaction 1</div>
+<h1>🤝 What Nobody Told Me</h1>
+<p class="lead">Back to your Huddle Team.</p>
+
+<div class="card gold">
+<ul class="large-list">
+<li>😮 Biggest surprise so far</li>
+<li>💪 Something that feels easier now</li>
+<li>😬 Something still difficult</li>
+<li>🧠 Something you've changed your mind about</li>
+</ul>
+</div>
+
+<p class="big">Finish together:</p>
+<p class="lead"><strong>“Something nobody really told us about student teaching is...”</strong></p>
+
+<div class="timer-box" data-seconds="600">
+<div class="timer-display">10:00</div>
+<div class="timer-controls">
+<button class="timer-start">Start</button>
+<button class="timer-pause secondary">Pause</button>
+<button class="timer-reset secondary">Reset</button>
+</div>
+</div>
+
+<div class="notes">
+<h3>🔒 Instructor Notes</h3>
+<p><strong>5:35–5:45.</strong> Same Huddle Teams.</p>
+<p>No shared slide required. Ask groups simply to agree on one sentence.</p>
+<p>When they return, ask for 2–3 sentences rather than all seven teams reporting.</p>
+</div>
+</div>
+</section>
+
+<section class="slide break-slide">
+<div class="slide-inner">
+<div class="eyebrow">Halftime</div>
+<h1>🚶 5-Minute Reset</h1>
+<p class="big">Stand up. Stretch. Food. Water. Reset.</p>
+<div class="timer-box" data-seconds="300">
+<div class="timer-display">05:00</div>
+<div class="timer-controls">
+<button class="timer-start">Start</button>
+<button class="timer-pause secondary">Pause</button>
+<button class="timer-reset secondary">Reset</button>
+</div>
+</div>
+<div class="notes"><h3>🔒 Instructor Notes</h3><p><strong>5:45–5:50.</strong> Actually take the break.</p></div>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+<div class="eyebrow">Interaction 2</div>
+<h1>🏟️ Licensing Road Trip</h1>
+
+<div class="callout">
+<p class="lead"><strong>You graduate from UWW and receive a teaching job opportunity in another state.</strong></p>
+<p>Your friend says:</p>
+<p class="big">“Don't worry. Wisconsin has reciprocity. You're good.”</p>
+</div>
+
+<h2>Before believing them...</h2>
+<ul class="large-list">
+<li>What would you verify?</li>
+<li>Where would you look?</li>
+<li>What information might depend on your specific pathway?</li>
+<li>What would you <strong>not</strong> rely on?</li>
+</ul>
+
+<div class="timer-box" data-seconds="420">
+<div class="timer-display">07:00</div>
+<div class="timer-controls">
+<button class="timer-start">Start</button>
+<button class="timer-pause secondary">Pause</button>
+<button class="timer-reset secondary">Reset</button>
+</div>
+</div>
+
+<div class="notes">
+<h3>🔒 Instructor Notes</h3>
+<p><strong>5:50–5:57.</strong> Huddle Teams.</p>
+<p>This is not licensing trivia. You're assessing whether they know how to find authoritative information.</p>
+</div>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+<div class="eyebrow">Licensing Road Trip Debrief</div>
+<h1>Know Where the Answer Lives.</h1>
+
+<div class="card-grid">
+<div class="card purple"><h3>State Agency</h3><p>Start with the official educator licensing authority.</p></div>
+<div class="card"><h3>Your Pathway</h3><p>Out-of-state, reciprocity and endorsement pathways may differ.</p></div>
+<div class="card"><h3>Requirements</h3><p>Tests, fingerprints, applications and documentation can change.</p></div>
+<div class="card gold"><h3>Verify</h3><p>Don't pay, register or submit based on somebody else's experience.</p></div>
+</div>
+
+<div class="callout">
+<strong>The goal isn't memorizing licensing rules.</strong><br>
+Know what applies to you, what you need to verify, and where the official answer lives.
+</div>
+
+<div class="notes">
+<h3>🔒 Instructor Notes</h3>
+<p><strong>5:57–6:05.</strong> Ask 2–3 teams what they would verify, then clarify the principle.</p>
+</div>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+<div class="eyebrow">Professional Story</div>
+<h1>💼 “I Taught a Volleyball Unit.”</h1>
+<p class="big">So what?</p>
+
+<div class="gold-line"></div>
+
+<p class="lead">An employer doesn't only need to know <strong>what</strong> you taught.</p>
+
+<div class="card purple">
+<h2>Tell the decision inside the experience.</h2>
+<p class="lead">
+I noticed...<br>
+So I decided...<br>
+I changed...<br>
+The evidence showed...<br>
+Next I...
+</p>
+</div>
+
+<div class="notes">
+<h3>🔒 Instructor Notes</h3>
+<p><strong>6:05–6:15.</strong> Instructor-led with student examples if they volunteer.</p>
+<p>Connect Round 2 evidence collection to upcoming interview preparation. Don't make this another breakout.</p>
+</div>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+<div class="eyebrow">Professional Story</div>
+<h1>Start Collecting the Receipts.</h1>
+
+<div class="card-grid">
+<div class="card"><h3>🛠️ Something You Changed</h3><p>Adaptation, management, assessment, instruction.</p></div>
+<div class="card"><h3>💬 Useful Feedback</h3><p>Something that changed your practice.</p></div>
+<div class="card"><h3>🤝 Collaboration</h3><p>A moment you worked with another professional.</p></div>
+<div class="card"><h3>🧩 A Problem You Solved</h3><p>Especially one that required judgment.</p></div>
+</div>
+
+<div class="callout">
+<strong>Collect first. Curate later.</strong><br>
+Future Job-Searching You will not remember everything you're doing right now.
+</div>
+
+<div class="notes">
+<h3>🔒 Instructor Notes</h3>
+<p><strong>6:15–6:20.</strong> Keep this short. Encourage students to save evidence without creating extra portfolio work.</p>
+</div>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+<div class="eyebrow">Next Play</div>
+<h1>🎯 Before We Meet Again...</h1>
+
+<div class="card-grid">
+<div class="card purple"><h2>TRY</h2><p>One thing you'll intentionally try.</p></div>
+<div class="card gold"><h2>NOTICE</h2><p>One thing you'll watch more closely.</p></div>
+<div class="card purple"><h2>ASK</h2><p>One person you should use as a resource.</p></div>
+<div class="card gold"><h2>VERIFY</h2><p>One professional/licensing question you need an official answer to.</p></div>
+</div>
+
+<p class="lead"><strong>No submission.</strong> Put it somewhere you'll actually see it.</p>
+
+<div class="notes">
+<h3>🔒 Instructor Notes</h3>
+<p><strong>6:20–6:27.</strong> Quiet individual thinking. Don't require sharing.</p>
+</div>
+</div>
+</section>
+
+<section class="slide final-slide">
+<div class="slide-inner">
+<div class="eyebrow">Midseason</div>
+<h1>You Don't Need Fewer Questions.</h1>
+<div class="gold-line"></div>
+<p class="big" style="color:white">You need better ones — and you need to know who can answer them.</p>
+<p class="lead">See you in November. 💜</p>
+<div class="notes"><h3>🔒 Instructor Notes</h3><p>Use remaining minutes for questions. End at 6:30.</p></div>
+</div>
+</section>
+
+</main>
+
+<footer class="controls">
+<div class="control-group">
+<button id="prevBtn" class="secondary">← Previous</button>
+<button id="nextBtn" class="primary">Next →</button>
+</div>
+<div class="control-group">
+<button id="notesBtn" class="gold-button">🔒 Instructor Notes</button>
+<button id="fullscreenBtn" class="secondary">⛶ Full Screen</button>
+</div>
+</footer>
+</div>
+
+<script>
+const slides=[...document.querySelectorAll(".slide")];
+let currentSlide=0;
+const progressBar=document.getElementById("progressBar");
+const slideCount=document.getElementById("slideCount");
+
+function showSlide(i){
+ if(i<0||i>=slides.length)return;
+ slides[currentSlide].classList.remove("active");
+ currentSlide=i;
+ slides[currentSlide].classList.add("active");
+ progressBar.style.width=((i+1)/slides.length*100)+"%";
+ slideCount.textContent=(i+1)+" / "+slides.length;
+ document.querySelector(".presentation").scrollTo(0,0);
+}
+document.getElementById("nextBtn").onclick=()=>showSlide(currentSlide+1);
+document.getElementById("prevBtn").onclick=()=>showSlide(currentSlide-1);
+document.addEventListener("keydown",e=>{
+ if(e.key==="ArrowRight"||e.key==="PageDown")showSlide(currentSlide+1);
+ if(e.key==="ArrowLeft"||e.key==="PageUp")showSlide(currentSlide-1);
+});
+document.getElementById("notesBtn").onclick=function(){
+ document.body.classList.toggle("show-notes");
+ this.textContent=document.body.classList.contains("show-notes")?"🔓 Hide Instructor Notes":"🔒 Instructor Notes";
+};
+document.getElementById("fullscreenBtn").onclick=async()=>{
+ try{
+  if(!document.fullscreenElement)await document.documentElement.requestFullscreen();
+  else await document.exitFullscreen();
+ }catch(e){}
+};
+
+document.querySelectorAll(".timer-box").forEach(box=>{
+ const display=box.querySelector(".timer-display");
+ const initial=Number(box.dataset.seconds);
+ let remaining=initial, interval=null;
+ function fmt(s){return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}
+ function update(){display.textContent=fmt(remaining);display.style.color=remaining<=120?"#8A2D2D":"#4B2E83"}
+ box.querySelector(".timer-start").onclick=()=>{
+  if(interval)return;
+  interval=setInterval(()=>{
+   if(remaining>0){remaining--;update()}
+   else{clearInterval(interval);interval=null}
+  },1000);
+ };
+ box.querySelector(".timer-pause").onclick=()=>{clearInterval(interval);interval=null};
+ box.querySelector(".timer-reset").onclick=()=>{clearInterval(interval);interval=null;remaining=initial;update()};
+ update();
+});
+showSlide(0);
+</script>
+</body>
+</html>

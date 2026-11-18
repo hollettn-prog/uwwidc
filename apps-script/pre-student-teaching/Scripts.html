@@ -1,0 +1,801 @@
+<script>
+
+/* =========================================================
+   PRE-STUDENT TEACHING TOOLKIT
+   SHARED CLIENT-SIDE SCRIPTS
+   ========================================================= */
+
+
+/* =========================================================
+   HOME
+   ========================================================= */
+
+function showHome() {
+
+  loadPartial(
+    'Home',
+    function() {
+
+      setActiveNav('home');
+
+      /*
+       * Check the student's Google Drive Toolkit
+       * whenever the homepage loads.
+       */
+      checkToolkitStatus();
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   COURSE NAVIGATION
+   ========================================================= */
+
+function openCourse(courseFile) {
+
+  loadPartial(
+    courseFile,
+    function() {
+
+      setActiveNav('');
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   ARTIFACT BUILDERS
+   ========================================================= */
+
+function openBuilder(builderFile) {
+
+  loadPartial(
+    builderFile,
+    function() {
+
+      setActiveNav('');
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   TOOLKIT INFORMATION PAGE
+   ========================================================= */
+
+function showToolkitInfo() {
+
+  const html = `
+
+    <section class="info-page">
+
+      <button
+        class="back-button"
+        onclick="showHome()">
+
+        ← Home
+
+      </button>
+
+
+      <div class="eyebrow">
+        MY TOOLKIT
+      </div>
+
+      <h1>
+        Your Pre-Student Teaching Toolkit
+      </h1>
+
+      <p>
+        The purpose of the toolkit is to give you one place
+        to keep the resources you develop across your methods
+        courses. As you prepare for student teaching, you can
+        return to these materials, revise them for your placement,
+        and continue adding to your collection.
+      </p>
+
+
+      <div class="info-row">
+
+        <h3>
+          One main Google Drive folder
+        </h3>
+
+        <p>
+          Your main folder will be called
+          <strong>Pre-Student Teaching Toolkit</strong>.
+          This gives you one location for the resources you
+          create across the program.
+        </p>
+
+      </div>
+
+
+      <div class="info-row">
+
+        <h3>
+          A folder for each methods course
+        </h3>
+
+        <p>
+          HEALTHED 445, PEPROF 437, PEPROF 447, and
+          PEPROF 475 will each have their own space within
+          the toolkit. Additional organization can be added
+          within each course as needed.
+        </p>
+
+      </div>
+
+
+      <div class="info-row">
+
+        <h3>
+          Your resources remain available to you
+        </h3>
+
+        <p>
+          Because the completed resources are stored in your
+          Google Drive, you can continue using them after a
+          Canvas course ends.
+        </p>
+
+      </div>
+
+
+      <div class="info-row">
+
+        <h3>
+          Continue using the toolkit during student teaching
+        </h3>
+
+        <p>
+          You may find that some resources are ready to use
+          as they are, while others need to be revised for your
+          placement. That is expected. The toolkit is intended
+          to support your development rather than serve as a
+          collection of finished assignments.
+        </p>
+
+      </div>
+
+
+      <div class="future-note"
+           style="margin-left:0; margin-right:0;">
+
+        You do not need to keep every piece of work you complete
+        in your methods courses. Focus on the resources, examples,
+        and ideas that will help you plan and teach more effectively.
+
+      </div>
+
+    </section>
+
+  `;
+
+
+  document.getElementById(
+    'appContent'
+  ).innerHTML = html;
+
+
+  setActiveNav('toolkit');
+
+
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+
+}
+
+
+/* =========================================================
+   PARTIAL LOADER
+
+   IMPORTANT:
+   Builder pages such as 437_M2_ChildDevelopment contain
+   their own JavaScript.
+
+   HTML inserted using innerHTML does not automatically
+   execute embedded script tags. This loader finds those
+   scripts and recreates them so the builder functions,
+   autosave, navigation, review, etc. actually work.
+   ========================================================= */
+
+function loadPartial(filename, callback) {
+
+  google.script.run
+
+    .withSuccessHandler(function(html) {
+
+      const container =
+        document.getElementById(
+          'appContent'
+        );
+
+
+      /*
+       * Insert the requested page.
+       */
+
+      container.innerHTML = html;
+
+
+      /*
+       * Find scripts contained in the newly
+       * inserted HTML.
+       */
+
+      const scripts =
+        container.querySelectorAll(
+          'script'
+        );
+
+
+      /*
+       * Recreate each script so the browser
+       * actually executes it.
+       */
+
+      scripts.forEach(
+        function(oldScript) {
+
+          const newScript =
+            document.createElement(
+              'script'
+            );
+
+
+          /*
+           * Copy any attributes from the
+           * original script element.
+           */
+
+          Array.from(
+            oldScript.attributes
+          ).forEach(
+            function(attribute) {
+
+              newScript.setAttribute(
+                attribute.name,
+                attribute.value
+              );
+
+            }
+          );
+
+
+          /*
+           * Copy the JavaScript.
+           */
+
+          newScript.textContent =
+            oldScript.textContent;
+
+
+          /*
+           * Replacing the old script with a
+           * newly created script causes the
+           * browser to execute it.
+           */
+
+          oldScript.parentNode.replaceChild(
+            newScript,
+            oldScript
+          );
+
+        }
+      );
+
+
+      /*
+       * Return to the top of the newly
+       * loaded page.
+       */
+
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+
+
+      /*
+       * Run any page-specific callback.
+       */
+
+      if (callback) {
+
+        callback();
+
+      }
+
+    })
+
+
+    .withFailureHandler(
+      function(error) {
+
+        alert(
+          'This page could not be loaded. ' +
+          'Please try again. If the problem continues, ' +
+          'contact your instructor.'
+        );
+
+
+        console.error(
+          'Unable to load partial:',
+          filename,
+          error
+        );
+
+      }
+    )
+
+
+    .getPartial(
+      filename
+    );
+
+}
+
+
+/* =========================================================
+   TOP NAVIGATION STATE
+   ========================================================= */
+
+function setActiveNav(section) {
+
+  const home =
+    document.getElementById(
+      'navHome'
+    );
+
+
+  const toolkit =
+    document.getElementById(
+      'navToolkit'
+    );
+
+
+  /*
+   * Safety check in case navigation
+   * elements are unavailable.
+   */
+
+  if (!home || !toolkit) {
+
+    return;
+
+  }
+
+
+  home.classList.remove(
+    'active'
+  );
+
+
+  toolkit.classList.remove(
+    'active'
+  );
+
+
+  if (section === 'home') {
+
+    home.classList.add(
+      'active'
+    );
+
+  }
+
+
+  if (section === 'toolkit') {
+
+    toolkit.classList.add(
+      'active'
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   GOOGLE DRIVE TOOLKIT
+   ========================================================= */
+
+
+/**
+ * Check whether the current student already has
+ * a connected Pre-Student Teaching Toolkit.
+ */
+function checkToolkitStatus() {
+
+  const label =
+    document.getElementById(
+      'toolkitStatusLabel'
+    );
+
+
+  const detail =
+    document.getElementById(
+      'toolkitStatusDetail'
+    );
+
+
+  /*
+   * These elements only exist on the homepage.
+   * If we're on another page, there is nothing
+   * to update.
+   */
+
+  if (!label || !detail) {
+
+    return;
+
+  }
+
+
+  label.textContent =
+    'Checking...';
+
+
+  detail.textContent =
+    'Looking for your toolkit.';
+
+
+  google.script.run
+
+    .withSuccessHandler(
+      function(status) {
+
+        updateToolkitDisplay(
+          status
+        );
+
+      }
+    )
+
+
+    .withFailureHandler(
+      function(error) {
+
+        label.textContent =
+          'Unable to check';
+
+
+        detail.textContent =
+          'Please try again.';
+
+
+        console.error(
+          'Toolkit status error:',
+          error
+        );
+
+      }
+    )
+
+
+    .getToolkitStatus();
+
+}
+
+
+/* =========================================================
+   SET UP GOOGLE DRIVE TOOLKIT
+   ========================================================= */
+
+/**
+ * Creates or finds the student's Toolkit
+ * and course folders.
+ */
+function setupMyToolkit() {
+
+  const label =
+    document.getElementById(
+      'toolkitStatusLabel'
+    );
+
+
+  const detail =
+    document.getElementById(
+      'toolkitStatusDetail'
+    );
+
+
+  const action =
+    document.getElementById(
+      'toolkitAction'
+    );
+
+
+  if (label) {
+
+    label.textContent =
+      'Setting up your toolkit...';
+
+  }
+
+
+  if (detail) {
+
+    detail.textContent =
+      'This may take a moment.';
+
+  }
+
+
+  if (action) {
+
+    action.innerHTML = `
+
+      <button
+        class="disabled-button"
+        disabled>
+
+        Setting Up...
+
+      </button>
+
+    `;
+
+  }
+
+
+  google.script.run
+
+    .withSuccessHandler(
+      function(status) {
+
+        updateToolkitDisplay(
+          status
+        );
+
+      }
+    )
+
+
+    .withFailureHandler(
+      function(error) {
+
+        if (label) {
+
+          label.textContent =
+            'Setup was not completed';
+
+        }
+
+
+        if (detail) {
+
+          detail.textContent =
+            'Please try again.';
+
+        }
+
+
+        if (action) {
+
+          action.innerHTML = `
+
+            <button
+              class="outline-button"
+              onclick="setupMyToolkit()">
+
+              Try Again
+
+            </button>
+
+          `;
+
+        }
+
+
+        console.error(
+          'Toolkit setup error:',
+          error
+        );
+
+      }
+    )
+
+
+    .setupToolkit();
+
+}
+
+
+/* =========================================================
+   UPDATE TOOLKIT DISPLAY
+   ========================================================= */
+
+function updateToolkitDisplay(status) {
+
+  const dot =
+    document.getElementById(
+      'toolkitStatusDot'
+    );
+
+
+  const label =
+    document.getElementById(
+      'toolkitStatusLabel'
+    );
+
+
+  const detail =
+    document.getElementById(
+      'toolkitStatusDetail'
+    );
+
+
+  const action =
+    document.getElementById(
+      'toolkitAction'
+    );
+
+
+  /*
+   * These elements exist only on the
+   * homepage Toolkit section.
+   */
+
+  if (
+    !dot ||
+    !label ||
+    !detail ||
+    !action
+  ) {
+
+    return;
+
+  }
+
+
+  /*
+   * TOOLKIT CONNECTED
+   */
+
+  if (
+    status &&
+    status.connected
+  ) {
+
+    dot.style.background =
+      '#31734c';
+
+
+    label.textContent =
+      'Toolkit connected';
+
+
+    detail.textContent =
+      status.folderName ||
+      'Pre-Student Teaching Toolkit';
+
+
+    /*
+     * Store the URL safely on the button rather
+     * than inserting it directly into onclick.
+     */
+
+    action.innerHTML = `
+
+      <button
+        class="outline-button"
+        id="openToolkitButton">
+
+        Open in Google Drive
+
+      </button>
+
+    `;
+
+
+    const openButton =
+      document.getElementById(
+        'openToolkitButton'
+      );
+
+
+    if (openButton) {
+
+      openButton.addEventListener(
+        'click',
+        function() {
+
+          openToolkitFolder(
+            status.folderUrl
+          );
+
+        }
+      );
+
+    }
+
+  }
+
+
+  /*
+   * TOOLKIT NOT CONNECTED
+   */
+
+  else {
+
+    dot.style.background =
+      '#999999';
+
+
+    label.textContent =
+      'Not connected';
+
+
+    detail.textContent =
+      'Set up your Google Drive toolkit.';
+
+
+    action.innerHTML = `
+
+      <button
+        class="outline-button"
+        onclick="setupMyToolkit()">
+
+        Set Up My Toolkit
+
+      </button>
+
+    `;
+
+  }
+
+}
+
+
+/* =========================================================
+   OPEN TOOLKIT IN GOOGLE DRIVE
+   ========================================================= */
+
+function openToolkitFolder(url) {
+
+  if (!url) {
+
+    return;
+
+  }
+
+
+  window.open(
+    url,
+    '_blank',
+    'noopener'
+  );
+
+}
+
+
+/* =========================================================
+   INITIAL TOOLKIT STATUS
+
+   Home.html is already present when the web app first
+   loads, so showHome() does not run on that initial load.
+   Check the Toolkit status once the page is ready.
+   ========================================================= */
+
+document.addEventListener(
+  'DOMContentLoaded',
+  function() {
+
+    checkToolkitStatus();
+
+  }
+);
+
+
+</script>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PEPROF 410 | Seminar Meeting 3</title>
+
+<style>
+:root{--purple:#4B2E83;--purple-dark:#35205f;--gold:#E6B800;--lavender:#F6F4FA;--cream:#FFF7DF;--text:#222;--white:#fff;--border:#ddd}
+*{box-sizing:border-box}html,body{margin:0;height:100%;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:#eeeaf4}
+button{font:inherit}button:focus{outline:4px solid var(--gold);outline-offset:3px}
+#app{height:100vh;display:flex;flex-direction:column}
+.topbar{background:var(--purple);color:white;padding:10px 20px;display:flex;align-items:center;gap:18px;min-height:55px}
+.course-name{font-weight:700}.progress-wrap{flex:1;height:8px;background:rgba(255,255,255,.25);border-radius:20px;overflow:hidden}
+#progressBar{height:100%;background:var(--gold)}.slide-count{font-size:.9rem}
+.presentation{flex:1;overflow:auto}.slide{display:none;min-height:calc(100vh - 120px);padding:50px max(6vw,40px) 70px;background:white}
+.slide.active{display:block}.slide-inner{max-width:1100px;margin:auto}
+.eyebrow{color:var(--purple);text-transform:uppercase;letter-spacing:.08em;font-size:.85rem;font-weight:bold;margin-bottom:10px}
+h1{color:var(--purple);font-size:clamp(2.4rem,5vw,4.6rem);line-height:1.05;margin:.1em 0 .25em}
+h2{color:var(--purple);font-size:clamp(1.7rem,3vw,2.6rem)}h3{color:var(--purple)}
+.lead{font-size:clamp(1.25rem,2vw,1.65rem);line-height:1.5;max-width:900px}
+.big{font-size:clamp(1.7rem,3vw,2.7rem);line-height:1.35;font-weight:700;color:var(--purple)}
+.gold-line{width:90px;height:7px;background:var(--gold);border-radius:20px;margin:25px 0}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;margin-top:25px}
+.card{border:1px solid var(--border);border-radius:12px;padding:22px}.card.gold{background:var(--cream);border:2px solid var(--gold)}
+.card.purple{background:var(--lavender);border-left:6px solid var(--purple)}
+.large-list{font-size:1.22rem;line-height:1.6}.large-list li{margin-bottom:11px}
+.callout{background:var(--cream);border:2px solid var(--gold);border-radius:12px;padding:25px;margin:25px 0;font-size:1.2rem}
+.timer-box{margin:30px 0;padding:25px;background:var(--lavender);border-radius:14px;text-align:center;border:2px solid var(--purple)}
+.timer-display{font-size:clamp(3rem,8vw,6rem);font-weight:700;color:var(--purple);font-variant-numeric:tabular-nums}
+.timer-controls{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}.timer-controls button{border:0;border-radius:7px;padding:10px 17px;background:var(--purple);color:white;font-weight:bold;cursor:pointer}.timer-controls .secondary{background:#555}
+.controls{background:white;border-top:1px solid var(--border);padding:10px 18px;display:flex;justify-content:space-between;gap:10px}.control-group{display:flex;gap:8px}.controls button{border:0;border-radius:7px;padding:9px 15px;font-weight:bold;cursor:pointer}
+.primary{background:var(--purple);color:white}.secondary{background:#ececec}.gold-button{background:var(--gold)}
+.hero{background:linear-gradient(135deg,var(--purple),var(--purple-dark));color:white}.hero h1,.hero h2,.hero .eyebrow{color:white}
+.break-slide{background:var(--cream)}.final-slide{background:var(--purple);color:white}.final-slide h1{color:white}
+@media(max-width:700px){.slide{padding:30px 22px 60px}.course-name{display:none}}
+</style>
+</head>
+
+<body>
+<div id="app">
+<header class="topbar">
+<div class="course-name">PEPROF 410 | Seminar 3</div>
+<div class="progress-wrap"><div id="progressBar"></div></div>
+<div id="slideCount" class="slide-count"></div>
+</header>
+
+<main class="presentation">
+
+<section class="slide hero active">
+<div class="slide-inner">
+<div class="eyebrow">PEPROF 410 | Seminar Meeting 3</div>
+<h1>🔬 Is It Working?</h1>
+<h2>Bring Your Teaching Mystery</h2>
+<div class="gold-line"></div>
+<p class="lead">By now, you have theories about your teaching. Tonight we're going to check some of them.</p>
+<div class="callout" style="color:#222">
+<strong>Think about:</strong> What keeps happening in your teaching that makes you wonder, “Why?”
+</div>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+<div class="eyebrow">Coach's Corner</div>
+<h1>“I Think...” Is a Starting Point.</h1>
+<div class="card-grid">
+<div class="card"><h3>“My directions are too long.”</h3></div>
+<div class="card"><h3>“This class takes forever to transition.”</h3></div>
+<div class="card"><h3>“I think this adaptation is helping.”</h3></div>
+<div class="card"><h3>“They aren't engaged.”</h3></div>
+</div>
+<div class="callout">
+Before changing everything: <strong>What would you need to see, hear, count, time, ask or compare?</strong>
+</div>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+<div class="eyebrow">A Useful Cycle</div>
+<h1>Try → Gather → Think → Adjust</h1>
+<div class="card-grid">
+<div class="card purple">
+<h2>TRY</h2>
+<p>Make one intentional change.</p>
+</div>
+<div class="card gold">
+<h2>GATHER</h2>
+<p>Collect a little useful evidence.</p>
+</div>
+<div class="card purple">
+<h2>THINK</h2>
+<p>What does the evidence suggest?</p>
+</div>
+<div class="card gold">
+<h2>ADJUST</h2>
+<p>What would you do next?</p>
+</div>
+</div>
+<p class="lead"><strong>Not:</strong> Try → Be Brilliant Immediately.</p>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+<div class="eyebrow">Interaction 1</div>
+<h1>🔍 Teaching Mystery Lab</h1>
+<p class="lead">Each person gets a turn. Your team's first job is <strong>not to solve it.</strong></p>
+
+<div class="card gold">
+<h2>Ask First</h2>
+<ul class="large-list">
+<li>What is actually happening?</li>
+<li>What are you noticing?</li>
+<li>What might you be assuming?</li>
+<li>When does it happen — and when doesn't it?</li>
+<li>What information are you missing?</li>
+</ul>
+</div>
+
+<div class="timer-box" data-seconds="900">
+<div class="timer-display">15:00</div>
+<div class="timer-controls">
+<button class="timer-start">Start</button>
+<button class="timer-pause secondary">Pause</button>
+<button class="timer-reset secondary">Reset</button>
+</div>
+</div>
+
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+<div class="eyebrow">Teaching Mystery Lab</div>
+<h1>A Better Question Is Progress.</h1>
+<p class="big">You don't have to leave the Huddle with an answer.</p>
+<div class="gold-line"></div>
+<p class="lead">Sometimes another teacher's best contribution is asking the question that makes you look at the situation differently.</p>
+</div>
+</section>
+
+<section class="slide break-slide">
+<div class="slide-inner">
+<div class="eyebrow">Halftime</div>
+<h1>🚶 5-Minute Reset</h1>
+<p class="big">Stand up. Stretch. Food. Water. Reset.</p>
+<div class="timer-box" data-seconds="300">
+<div class="timer-display">05:00</div>
+<div class="timer-controls">
+<button class="timer-start">Start</button>
+<button class="timer-pause secondary">Pause</button>
+<button class="timer-reset secondary">Reset</button>
+</div>
+</div>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+<div class="eyebrow">Evidence</div>
+<h1>📊 Keep It Small.</h1>
+<p class="big">You are not conducting a dissertation in the gym.</p>
+<div class="card-grid">
+<div class="card purple">
+<h2>TIME IT</h2>
+<p>How long does something actually take?</p>
+</div>
+<div class="card">
+<h2>COUNT IT</h2>
+<p>How often? How many? Who?</p>
+</div>
+<div class="card gold">
+<h2>ASK</h2>
+<p>What do students say or understand?</p>
+</div>
+<div class="card">
+<h2>LOOK</h2>
+<p>What observable pattern is present?</p>
+</div>
+<div class="card purple">
+<h2>COMPARE</h2>
+<p>Before/after, class/class, approach/approach.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+<div class="eyebrow">Interaction 2</div>
+<h1>🧪 Evidence Challenge</h1>
+
+<div class="callout">
+<strong>Question:</strong><br>
+“I think my directions are too long and students stop listening.”
+</div>
+
+<h2>Your team decides:</h2>
+<ul class="large-list">
+<li>What could you actually collect?</li>
+<li>What would count as evidence?</li>
+<li>What is one small adjustment you could try?</li>
+<li>What would you check afterward?</li>
+</ul>
+
+<div class="timer-box" data-seconds="480">
+<div class="timer-display">08:00</div>
+<div class="timer-controls">
+<button class="timer-start">Start</button>
+<button class="timer-pause secondary">Pause</button>
+<button class="timer-reset secondary">Reset</button>
+</div>
+</div>
+
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+<div class="eyebrow">Evidence Challenge Debrief</div>
+<h1>There Isn't One Perfect Measure.</h1>
+<div class="card-grid">
+<div class="card">
+<h3>⏱️ Time</h3>
+<p>Length of directions or transition.</p>
+</div>
+<div class="card">
+<h3>👀 Observe</h3>
+<p>When attention begins to shift.</p>
+</div>
+<div class="card">
+<h3>🔢 Count</h3>
+<p>Repeated questions after directions.</p>
+</div>
+<div class="card">
+<h3>⚖️ Compare</h3>
+<p>One approach against another.</p>
+</div>
+</div>
+<div class="callout">
+The useful question is: <strong>What evidence would help me make a better instructional decision?</strong>
+</div>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+<div class="eyebrow">Mini Teaching Experiment</div>
+<h1>Your Experiment Can Flop.</h1>
+<p class="big">Seriously.</p>
+<div class="gold-line"></div>
+<p class="lead">
+If your adjustment makes no difference, you still learned something.
+If it makes things worse, you learned something.
+If the evidence challenges your original theory, you definitely learned something.
+</p>
+<div class="callout">
+<strong>We're grading the learning cycle — not whether your first idea was brilliant.</strong>
+</div>
+</div>
+</section>
+
+<section class="slide">
+<div class="slide-inner">
+<div class="eyebrow">Your Next Play</div>
+<h1>🎯 Take Your Mystery Back to School.</h1>
+<div class="card-grid">
+<div class="card purple">
+<h2>QUESTION</h2>
+<p>What do I actually want to know?</p>
+</div>
+<div class="card gold">
+<h2>EVIDENCE</h2>
+<p>What small thing could I collect?</p>
+</div>
+<div class="card purple">
+<h2>CHANGE</h2>
+<p>What one adjustment could I try?</p>
+</div>
+<div class="card gold">
+<h2>CHECK</h2>
+<p>What will I look at afterward?</p>
+</div>
+</div>
+<p class="lead"><strong>No need to solve everything tonight.</strong></p>
+</div>
+</section>
+
+<section class="slide final-slide">
+<div class="slide-inner">
+<div class="eyebrow">Seminar 3</div>
+<h1>Don't Fix It Because You Feel Like It.</h1>
+<div class="gold-line"></div>
+<p class="big" style="color:white">Get curious. Gather a little evidence. Then decide.</p>
+<p class="lead">That's reflective teaching. 💜</p>
+</div>
+</section>
+
+</main>
+
+<footer class="controls">
+<div class="control-group">
+<button id="prevBtn" class="secondary">← Previous</button><button id="nextBtn" class="primary">Next →</button>
+</div>
+<div class="control-group"><button id="fullscreenBtn" class="secondary">⛶ Full Screen</button></div>
+</footer>
+</div>
+
+<script>
+const slides=[...document.querySelectorAll(".slide")];let currentSlide=0;
+const progressBar=document.getElementById("progressBar"),slideCount=document.getElementById("slideCount");
+function showSlide(i){if(i<0||i>=slides.length)return;slides[currentSlide].classList.remove("active");currentSlide=i;slides[i].classList.add("active");progressBar.style.width=((i+1)/slides.length*100)+"%";slideCount.textContent=(i+1)+" / "+slides.length;document.querySelector(".presentation").scrollTo(0,0)}
+document.getElementById("nextBtn").onclick=()=>showSlide(currentSlide+1);
+document.getElementById("prevBtn").onclick=()=>showSlide(currentSlide-1);
+document.addEventListener("keydown",e=>{if(e.key==="ArrowRight"||e.key==="PageDown")showSlide(currentSlide+1);if(e.key==="ArrowLeft"||e.key==="PageUp")showSlide(currentSlide-1)});
+document.getElementById("fullscreenBtn").onclick=async()=>{try{if(!document.fullscreenElement)await document.documentElement.requestFullscreen();else await document.exitFullscreen()}catch(e){}};
+document.querySelectorAll(".timer-box").forEach(box=>{
+ const display=box.querySelector(".timer-display"),initial=Number(box.dataset.seconds);let remaining=initial,interval=null;
+ const fmt=s=>String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");
+ function update(){display.textContent=fmt(remaining);display.style.color=remaining<=120?"#8A2D2D":"#4B2E83"}
+ box.querySelector(".timer-start").onclick=()=>{if(interval)return;interval=setInterval(()=>{if(remaining>0){remaining--;update()}else{clearInterval(interval);interval=null}},1000)};
+ box.querySelector(".timer-pause").onclick=()=>{clearInterval(interval);interval=null};
+ box.querySelector(".timer-reset").onclick=()=>{clearInterval(interval);interval=null;remaining=initial;update()};update();
+});
+showSlide(0);
+</script>
+</body>
+</html>
