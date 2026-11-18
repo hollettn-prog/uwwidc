@@ -1,0 +1,24 @@
+{
+  "name": "uwwidc",
+  "version": "1.0.0",
+  "description": "This repository stores and version-controls Google Apps Script projects managed via [`clasp`](https://github.com/google/clasp).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hollettn-prog/uwwidc.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/hollettn-prog/uwwidc/issues"
+  },
+  "homepage": "https://github.com/hollettn-prog/uwwidc#readme",
+  "devDependencies": {
+    "@types/google-apps-script": "^2.0.15"
+  }
+}
