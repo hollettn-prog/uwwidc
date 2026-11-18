@@ -1,62 +1,31 @@
-# UWWIDC Google Apps Script Projects
+# UWW Kinesiology Canvas Page Builder
 
-This repository stores and version-controls Google Apps Script projects managed via [`clasp`](https://github.com/google/clasp).
+A static, browser-based starter for generating reusable Canvas HTML for Course Information pages. It requires no build step and has no external dependencies.
 
-## Projects
+## Included
 
-| Folder | Apps Script Project | Script ID |
-| :--- | :--- | :--- |
-| `apps-script/pre-student-teaching` | Pre-Student Teaching | `1TwuzIyTmPGHUsLbJcz8W_lMwnEAsylIjCntxDYnpWC-_7ZnJVimSz-DM` |
-| `apps-script/peprof-410-seminar-2` | PEPROF 410 Seminar (2) | `1ceTrr0svlmoqPjsv4PMrVV1fXRC4Zj3Fziw-XGh467nLB9ad1JgaSbSu` |
-| `apps-script/spot-the-safety-pro` | Spot the Safety Pro | `1FQ5-ndXlrUZ3K3vQZOjs9KTq-t6_EdASGg1Lk3QUtoBDV8eAcxPMuZ1Z` |
-| `apps-script/roseman-gym-space` | Roseman Gym Space | `1rz6lLa2vN-yu9UD3QzUmhIfh6fMX8J_KvktT-DxyLX1TyolPV8MHkda5` |
-| `apps-script/peprof-410-seminar-1` | PEPROF 410 Seminar 1 | `1ra5xEyX8O8yEG2CwDauShTH4iux4UDEfhEVKZGtwdt6fGMRlmEJ4MSqb` |
-| `apps-script/peprof-222` | PEPROF 222 | `1Nk3ycO772trSNEmVSP7bREHS_z-mv93cJvfBpbE3guq-UbNkd2C1RBrk` |
+- Five page types: Welcome, Meet Your Instructor, Syllabus and Calendar, Getting Help, and University Policies.
+- Form fields with accessible labels and descriptions.
+- Live preview, Canvas-oriented HTML output, copy and download actions.
+- Subtle instructor-update notices for term-specific details.
+- Sample content, Canvas paste directions, and guided FAQ.
+- UWW purple/lavender/white styling; no gold or yellow.
 
----
+## Publish with GitHub Pages
 
-## One-Command Backup (Google Apps Script → GitHub)
+1. Add `index.html` to the root of a GitHub repository.
+2. Open **Settings → Pages** and select the main branch and root folder as the source.
+3. Save and open the Pages URL after deployment completes.
+4. Test every page type, copy action, keyboard navigation, and mobile layout. Then share the tool with instructors.
 
-After editing any project in the online Apps Script editor, run this from the root of this repository to pull the latest code from all 6 projects and back them up to GitHub:
+## Add to a Canvas course
 
-```bash
-./sync.sh
-cd apps-script/PROJECT_FOLDER
-clasp pull
-cd ../..
-git add .
-git commit -m "Update PROJECT_FOLDER from Apps Script"
-git push
-cd apps-script/PROJECT_FOLDER
-clasp push
-cd ../..
-git add .
-git commit -m "Update PROJECT_FOLDER"
-git push
-* **Verification:** Run `ls -la README.md`—it should show the newly created `README.md` file without errors.
+Select a page type, enter verified information, review the preview and generated HTML, then copy the code. In Canvas, create or edit the target page, open the HTML Editor, paste the code, save, and verify the result in student view. Check current links, media, dates, contact information, and official policy wording before publishing.
 
-### 2. Create the automatic `./sync.sh` script
-Paste this block to create a script that loops through every folder in `apps-script/`, runs `clasp pull` on each one, and automatically commits and pushes any changes to GitHub:
+## AI help
 
-```bash
-cat << 'EOF' > sync.sh
-#!/bin/bash
-set -e
+This starter has guided FAQ and a copyable prompt for an approved campus AI assistant. It does not connect to a generative AI API. If a live assistant is added, use an approved server-side service; do not put API keys or private credentials in this public repository or browser code. Do not send student records or private information to the helper.
 
-echo "Pulling latest code from Google Apps Script..."
-for dir in apps-script/*/; do
-  if [ -f "${dir}.clasp.json" ]; then
-    echo "-> Syncing $dir"
-    (cd "$dir" && clasp pull)
-  fi
-done
+## Reuse and maintenance
 
-echo "Checking for changes to back up to GitHub..."
-git add apps-script/
-if git diff --cached --quiet; then
-  echo "Everything is already up to date. Nothing to commit."
-else
-  git commit -m "Sync Apps Script projects ($(date '+%Y-%m-%d %H:%M'))"
-  git push
-  echo "Backup pushed to GitHub!"
-fi
+The sample values are placeholders. Replace or verify course details and official links before sharing. Keep the page title and navigation clear. Use real heading levels, descriptive links, sufficient contrast, and captions/transcripts for media. Canvas may sanitize or adjust pasted HTML, so inspect the saved page.
