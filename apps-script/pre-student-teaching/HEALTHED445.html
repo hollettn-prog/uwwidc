@@ -1,71 +1,55 @@
-<section class="course-page">
-
-  <button
-    class="back-button"
-    onclick="showHome()">
-
-    ← Back to all courses
-
-  </button>
-
-
-  <div class="course-page-header"
-       style="background:#edf8f5;">
-
-    <div class="section-kicker"
-         style="color:#187b67;">
-
-      HEALTHED 445
-
-    </div>
-
-    <h1>
-      Health Education
-    </h1>
-
-    <p>
-
-      Actually teach. Not just make a poster.
-
-      This Toolkit will collect the health education
-      resources worth carrying into your future
-      classroom.
-
-    </p>
-
-  </div>
-
-
-  <div class="artifact-card">
-
-    <div>
-
-      <h3>
-        Health Education Toolkit
-      </h3>
-
-      <p>
-
-        We'll review the course assignments and decide
-        which resources genuinely belong here.
-
-      </p>
-
-      <span class="status-pill">
-        TOOLKIT AUDIT COMING
-      </span>
-
-    </div>
-
-
-    <button
-      class="coming-button"
-      disabled>
-
-      🦅 Standing By
-
-    </button>
-
-  </div>
-
-</section>
+<section class="course-page" id="h445"><button class="back-button" onclick="showHome()">← All Courses</button><header class="course-header"><div class="eyebrow">HEALTHED 445</div><h1>Health Education</h1><p>Select a module to open its Teaching Toolkit resource.</p></header><section class="module"><label for="h445select"><strong>Choose a module</strong></label><select id="h445select" style="display:block;width:100%;padding:12px;margin:10px 0;font:inherit"></select><div id="h445summary"></div></section><section class="module" id="h445workspace" hidden><button type="button" class="back-button" id="h445back">← Choose another module</button><h2 id="h445title"></h2><p>Complete the sections below. Check Canvas for the assignment directions and rubric.</p><p id="h445status" role="status" aria-live="polite"></p><form id="h445form"><div id="h445fields"></div><button type="submit" class="open-button" id="h445save">Save to Google Drive</button> <a id="h445doc" target="_blank" rel="noopener noreferrer" hidden>Open saved Google Doc</a></form><section style="margin-top:28px;border-top:1px solid #ddd;padding-top:16px"><h3>Prepare for Canvas Submission</h3><p>Enter your instructor's university email. The document will be shared as Viewer; copy its URL into the Canvas assignment.</p><label for="h445email">Instructor's @uww.edu email</label><input id="h445email" type="email" placeholder="instructor@uww.edu" style="display:block;width:100%;padding:11px;margin:8px 0 12px"/><button type="button" class="open-button" id="h445prepare">Prepare for Submission</button><div id="h445result" role="status" aria-live="polite"></div></section></section></section><style>#h445 .h445field{margin:22px 0}#h445 textarea{display:block;width:100%;min-height:125px;padding:12px;font:inherit;border:1px solid #9b94a4;border-radius:7px}#h445 .h445coach{margin:10px 0;border:1px solid #d8cde5;padding:12px;border-radius:8px}#h445 .h445coach summary{cursor:pointer;font-weight:bold;color:#501d82}#h445 .h445coach button{margin:8px 6px 4px 0;padding:8px;border:1px solid #501d82;background:white;color:#501d82;border-radius:6px;cursor:pointer}#h445 button:focus-visible,#h445 textarea:focus-visible,#h445 select:focus-visible{outline:3px solid #501d82;outline-offset:2px}</style><script>
+(function(){
+ const catalog=[{"module": 1, "moduleTitle": "The Purpose & Power of Health Education", "title": "Lesson Diagnosis & Redesign", "description": "Examine a health lesson and redesign one segment so students practice a usable skill.", "fields": [{"id": "goal", "label": "Intended learning", "prompt": "What health skill should learners demonstrate?"}, {"id": "diagnosis", "label": "Lesson diagnosis", "prompt": "What do students actually do in the supplied lesson? What evidence is collected?"}, {"id": "gap", "label": "Missing evidence", "prompt": "What can the teacher not tell about individual skill use?"}, {"id": "revision", "label": "Redesigned segment", "prompt": "Write student directions for one improved lesson segment."}, {"id": "evidence", "label": "Individual evidence", "prompt": "Describe the individual task and two or three observable criteria."}, {"id": "rationale", "label": "Reason for the change", "prompt": "Explain how your revision supports application rather than recall."}]}, {"module": 2, "moduleTitle": "Planning Skills-Based Health Learning", "title": "Needs-to-Evidence Plan", "description": "Connect learner needs to an observable goal and an aligned assessment.", "fields": [{"id": "need", "label": "Learner need and evidence", "prompt": "Use Ms. Rivera’s 26 eighth graders: 18 trust the post with more followers, six check the creator, and nine notice the date; counts may overlap."}, {"id": "skill", "label": "Standard and health skill", "prompt": "Identify the relevant source-evaluation skill and the selected standard/indicator. Check official wording."}, {"id": "goal", "label": "Observable learning goal", "prompt": "Write a goal that students can demonstrate."}, {"id": "assessment", "label": "Assessment task and criteria", "prompt": "Provide materials, directions, an individual response, and two or three criteria."}, {"id": "preparation", "label": "Preparation and access", "prompt": "Describe brief modeling, practice, feedback, and accessible printed source materials."}, {"id": "revision", "label": "Alignment check and revision", "prompt": "Explain how the task reveals the goal and identify one useful revision."}]}, {"module": 3, "moduleTitle": "Teaching Health Skills Through Practice", "title": "Health Skill Teaching & Practice Guide", "description": "Plan a model, supported practice, feedback, and individual application.", "fields": [{"id": "model", "label": "Case A teacher model", "prompt": "Write a think-aloud comparing responses to the long handwashing line before lunch, their consequences, and a feasible choice."}, {"id": "guided", "label": "Case B guided practice", "prompt": "Describe how partners compare options when soap is missing, with adult support available."}, {"id": "feedback", "label": "Feedback and revision", "prompt": "Respond to “We would ask the adult for help because washing hands is important.” Prompt missing comparison and consequences."}, {"id": "independent", "label": "Case C individual application", "prompt": "Design an individual task about a changed room and missed handwashing stop; retain the information card."}, {"id": "rationale", "label": "Method and access rationale", "prompt": "Explain the support progression and how access is maintained."}, {"id": "revision", "label": "Revision note", "prompt": "Explain one change made after feedback. Reuse your discussion think-aloud; do not rerecord it."}]}, {"module": 4, "moduleTitle": "Managing a Health Classroom", "title": "Classroom Management Decision Plan", "description": "Plan routines and professional responses for respectful participation.", "fields": [{"id": "routines", "label": "Opening and participation routines", "prompt": "Teach observable discussion routines for a fictional stress and help-seeking lesson."}, {"id": "comment", "label": "Responding to a harmful comment", "prompt": "Write your first words and next action when a learner calls help-seeking “weak”."}, {"id": "participation", "label": "Participation without disclosure", "prompt": "Offer a fictional scenario so a reluctant learner can demonstrate the skill without sharing personal experience."}, {"id": "private", "label": "Private request and professional boundaries", "prompt": "Explain supportive language, confidentiality limits, and which institutional procedures you would consult. Do not promise secrecy."}, {"id": "evidence", "label": "Check participation and learning", "prompt": "What observable evidence would show students can make a respectful support request?"}, {"id": "revision", "label": "Management revision", "prompt": "Identify one adjustment to your routine or response and explain why."}]}, {"module": 5, "moduleTitle": "Planning a Complete Inclusive Lesson", "title": "Complete Health Lesson Plan", "description": "Combine instruction, practice, access, and assessment into a usable lesson.", "fields": [{"id": "goal", "label": "Lesson goal and context", "prompt": "Plan a 45-minute Grade 8 Consumer Health source-evaluation lesson."}, {"id": "sequence", "label": "Lesson sequence and timing", "prompt": "Describe the opening, teacher model, guided practice, individual application, and closure with estimated times."}, {"id": "materials", "label": "Teacher and student materials", "prompt": "Supply usable directions and fictional source information students will need."}, {"id": "assessment", "label": "Individual assessment and criteria", "prompt": "Explain how each learner evaluates a new source and justifies the choice."}, {"id": "access", "label": "Access and routines", "prompt": "Describe reading/access supports and respectful participation routines."}, {"id": "contingency", "label": "Time contingency and rationale", "prompt": "What would you shorten if time runs short, while preserving practice and individual evidence?"}]}, {"module": 6, "moduleTitle": "Responding While Teaching", "title": "Teaching Response Guide", "description": "Interpret learner responses and adjust instruction with a targeted recheck.", "fields": [{"id": "observations", "label": "What the responses show", "prompt": "Use the fictional vehicle-idling case: A says a short period can never matter; B justifies and transfers; C leaves a dense prompt blank. Separate observations from assumptions."}, {"id": "checks", "label": "What you would check", "prompt": "What additional information would distinguish a misconception, access barrier, or readiness?"}, {"id": "responses", "label": "Teaching response for A, B, and C", "prompt": "Plan differentiated next moves without reducing the intended reasoning goal."}, {"id": "timing", "label": "Remaining teaching time", "prompt": "Allocate 20 minutes to targeted responses and practice."}, {"id": "recheck", "label": "Individual recheck", "prompt": "Write a brief new-case prompt that checks the same reasoning."}, {"id": "update", "label": "Six-minute update", "prompt": "Revise your plan for six minutes remaining, and explain what evidence you would collect."}]}, {"module": 7, "moduleTitle": "Assess Learning and Adjust Instruction", "title": "Health Skills Assessment & Revision Guide", "description": "Use criteria and student evidence to choose a next teaching move.", "fields": [{"id": "criteria", "label": "Assessment criteria", "prompt": "Define descriptive criteria for selecting a community resource and justifying fit and access."}, {"id": "individual", "label": "Interpret individual work", "prompt": "A suitable resource is chosen without a reason; another submission is unreadable. Explain what can and cannot be concluded."}, {"id": "patterns", "label": "Class evidence", "prompt": "Interpret the criterion-level patterns provided in your Canvas assignment; do not add overlapping counts as unique learners."}, {"id": "feedback", "label": "Actionable feedback", "prompt": "Write feedback tied to demonstrated strengths and missing justification."}, {"id": "revision", "label": "Instructional revision", "prompt": "Identify a priority based on evidence and plan a focused instructional change."}, {"id": "followup", "label": "Follow-up evidence", "prompt": "Explain how you would assess Casey’s application using the same criteria in a new situation."}]}, {"module": 8, "moduleTitle": "Design a Skills-Based Health Unit", "title": "Reusable Health Unit Planning Template", "description": "Build a coherent unit using your revised lesson and aligned evidence.", "fields": [{"id": "goal", "label": "Unit focus and goal", "prompt": "Identify a focused Grade 8 Consumer Health source-evaluation goal."}, {"id": "map", "label": "Unit sequence", "prompt": "Outline a justified number of lessons and show how reasoning and independence develop."}, {"id": "lesson", "label": "Revise the M5 lesson", "prompt": "Explain where the revised complete M5 lesson fits and what changes it needs."}, {"id": "other", "label": "Connected lesson outlines", "prompt": "Outline other lessons, their purpose, and needed student materials."}, {"id": "evidence", "label": "Assessment and access", "prompt": "Describe initial, formative, and final evidence plus access supports."}, {"id": "rationale", "label": "Progression and revision rationale", "prompt": "Explain why the sequence develops independent transfer and how feedback informed revision."}]}, {"module": 9, "moduleTitle": "Toolkit Synthesis & Professional Reflection", "title": "Toolkit Synthesis & Professional Reflection", "description": "Use existing artifacts to explain professional growth and next steps.", "fields": [{"id": "index", "label": "Artifact index", "prompt": "List selected existing Toolkit resources and what each demonstrates."}, {"id": "claim", "label": "Supported professional claim", "prompt": "Make a specific claim about planning or revision supported by your work, without claiming unobserved classroom results."}, {"id": "evidence", "label": "Evidence of revision", "prompt": "Compare an original section, feedback, and revised section; explain the change."}, {"id": "limits", "label": "What the evidence cannot show", "prompt": "Distinguish a completed plan from evidence of impact on school learners."}, {"id": "next", "label": "Professional next step", "prompt": "Describe a feasible action and the evidence you would collect in future teaching."}, {"id": "synthesis", "label": "Final synthesis", "prompt": "Connect your existing discussion synthesis and Toolkit work; do not recreate or resubmit every artifact."}]}];
+ const byId=id=>document.getElementById(id),select=byId('h445select');let current=1,dirty=false;
+ catalog.forEach(d=>select.add(new Option('Module '+d.module+' · '+d.moduleTitle,d.module)));
+ function summary(){const d=catalog[Number(select.value)-1];byId('h445summary').innerHTML='<h2>'+d.title+'</h2><p>'+d.description+'</p><button class="open-button" id="h445open" type="button">Open resource</button>';byId('h445open').onclick=()=>open(d.module)}
+ select.onchange=summary;summary();
+ function status(t){byId('h445status').textContent=t}function busy(v){byId('h445save').disabled=v;byId('h445prepare').disabled=v}
+ function fields(){const out={};catalog[current-1].fields.forEach(f=>out[f.id]=byId('h445field_'+f.id).value);return out}
+ function showLink(url){const a=byId('h445doc');a.href=url;a.hidden=false}
+ function open(n){current=n;dirty=false;const d=catalog[n-1];byId('h445workspace').hidden=false;byId('h445title').textContent='Module '+n+' · '+d.title;byId('h445fields').replaceChildren();byId('h445result').replaceChildren();
+ d.fields.forEach(f=>{const section=document.createElement('div');section.className='h445field';const label=document.createElement('label');label.htmlFor='h445field_'+f.id;label.textContent=f.label;label.style.fontWeight='bold';const prompt=document.createElement('p');prompt.textContent=f.prompt;const area=document.createElement('textarea');area.id=label.htmlFor;area.addEventListener('input',()=>{dirty=true;status('Unsaved changes')});const details=document.createElement('details');details.className='h445coach';const sum=document.createElement('summary');sum.textContent='Need help with this section?';const output=document.createElement('p');output.setAttribute('aria-live','polite');const buttons=document.createElement('div');[['Hint','hint'],['Guiding question','question'],['Example','example']].forEach(pair=>{const b=document.createElement('button');b.type='button';b.textContent=pair[0];b.onclick=()=>{output.textContent=pair[1]==='hint'?'Focus on the specific teaching decision this section asks you to make.':pair[1]==='question'?'What would a teacher be able to observe in student work to support your decision?':'For example, describe a specific student action, the evidence it produces, and why that evidence matches the learning goal.'};buttons.appendChild(b)});details.append(sum,buttons,output);section.append(label,prompt,area,details);byId('h445fields').appendChild(section)});
+ byId('h445summary').hidden=true;select.disabled=true;status('Loading saved work…');google.script.run.withSuccessHandler(r=>{if(current!==n)return;d.fields.forEach(f=>byId('h445field_'+f.id).value=(r.fields||{})[f.id]||'');if(r.url)showLink(r.url);else byId('h445doc').hidden=true;dirty=false;status(r.exists?'Saved draft loaded.':'Start your assignment below.');}).withFailureHandler(e=>status('Could not load draft: '+(e.message||e))).health445ModuleGetDraft(n);}
+ byId('h445back').onclick=()=>{if(dirty&&!confirm('You have unsaved changes. Leave this assignment?'))return;byId('h445workspace').hidden=true;byId('h445summary').hidden=false;select.disabled=false;dirty=false;summary()};
+ function save(finalize){const n=current,data=fields();let email=byId('h445email').value.trim();if(finalize&&!/^[a-z0-9._%+\-]+@uww\.edu$/i.test(email)){status('Enter a valid instructor @uww.edu email.');return}busy(true);status(finalize?'Preparing submission…':'Saving…');byId('h445result').replaceChildren();const success=r=>{busy(false);dirty=false;showLink(r.url);status(finalize?'Instructor access verified. Submit the document URL in Canvas.':'Saved to your Google Drive.');if(finalize){const input=document.createElement('input');input.value=r.url;input.readOnly=true;input.style.cssText='display:block;width:100%;padding:10px;margin:10px 0';input.setAttribute('aria-label','Canvas submission URL');const copy=document.createElement('button');copy.type='button';copy.textContent='Select URL to copy';copy.onclick=()=>{input.focus();input.select()};byId('h445result').append('Viewer access verified for '+r.instructor,input,copy)}};const failure=e=>{busy(false);status('Could not save or share: '+(e.message||e))};if(finalize)google.script.run.withSuccessHandler(success).withFailureHandler(failure).health445ModulePrepareSubmission(n,data,email);else google.script.run.withSuccessHandler(success).withFailureHandler(failure).health445ModuleSaveDraft(n,data)}
+ byId('h445form').onsubmit=e=>{e.preventDefault();save(false)};byId('h445prepare').onclick=()=>save(true);
+ google.script.run.withSuccessHandler(email=>byId('h445email').value=email||'').withFailureHandler(()=>{}).health445ModuleInstructor();
+})();
+</script>
+<style id="submission-checklist-style">
+.toolkit-submit-checklist{margin:28px 0 12px;padding:20px;border:1px solid #b9c9c9;border-radius:12px;background:#f7faf9;color:#203337;font-family:Arial,Helvetica,sans-serif;line-height:1.55}
+.toolkit-submit-checklist h3{margin:0 0 6px;font-size:20px;color:#165e65}
+.toolkit-submit-checklist p{margin:6px 0 14px}
+.toolkit-submit-checklist label{display:flex;align-items:flex-start;gap:10px;margin:13px 0;cursor:pointer}
+.toolkit-submit-checklist input[type=checkbox]{margin-top:5px;min-width:17px;min-height:17px;accent-color:#165e65}
+.toolkit-submit-checklist input[type=email]{width:100%;padding:10px;border:1px solid #88999b;border-radius:6px;box-sizing:border-box;font-size:16px}
+.toolkit-submit-checklist .tk-warning{color:#8b3030;font-size:14px}
+.toolkit-submit-checklist .tk-ready{color:#165e65;font-weight:bold}
+.toolkit-submit-checklist a{color:#165e65;text-decoration:underline}
+</style>
+<script id="submission-checklist-script">
+(function(){
+'use strict';
+var course = document.currentScript && document.currentScript.closest('[data-course]')?.getAttribute('data-course') || 'toolkit';
+function moduleKey(){var selects=[...document.querySelectorAll('select')];var selected=selects.find(s=>/module/i.test((s.id||'')+' '+(s.name||'')+' '+(s.getAttribute('aria-label')||'')));return selected?selected.value:(document.querySelector('[data-module].active')?.getAttribute('data-module')||'current');}
+function build(){
+ var existing=document.getElementById('tk-submit-checklist');if(existing) return;
+ var el=document.createElement('section');el.id='tk-submit-checklist';el.className='toolkit-submit-checklist';el.setAttribute('aria-labelledby','tk-submit-heading');
+ el.innerHTML='<h3 id="tk-submit-heading">Before you submit to Canvas</h3><p>Complete these steps after finishing your assignment. Your instructor must be able to open your Google Doc.</p>'+
+ '<label><input type="checkbox" id="tk-saved"> <span>I saved my completed assignment to Google Drive and opened the document to check my work.</span></label>'+
+ '<label for="tk-instructor-email" style="display:block">Instructor’s UW–Whitewater email address</label><input id="tk-instructor-email" type="email" inputmode="email" autocomplete="email" placeholder="instructor@uww.edu" aria-describedby="tk-email-help"><p id="tk-email-help" style="font-size:13px">Use the instructor email listed in your Canvas course. Entering an address here does not automatically share your file.</p>'+
+ '<label><input type="checkbox" id="tk-shared"> <span>In Google Drive, I selected <strong>Share</strong>, added this instructor email, set access to <strong>Viewer</strong>, and clicked <strong>Send</strong>.</span></label>'+
+ '<label><input type="checkbox" id="tk-verified"> <span>I checked the Google Doc’s <strong>Share</strong> settings and confirmed this instructor is listed as a Viewer.</span></label>'+
+ '<label><input type="checkbox" id="tk-link"> <span>I copied the Google Doc link and am ready to submit it in the Canvas Toolkit assignment.</span></label>'+
+ '<p id="tk-check-status" role="status" aria-live="polite" class="tk-warning">Complete all steps before submitting your link.</p>';
+ var anchor=document.querySelector('[data-toolkit-workspace]')||document.querySelector('main')||document.querySelector('.content')||document.body;
+ anchor.appendChild(el);
+ var email=el.querySelector('#tk-instructor-email');
+ try{email.value=localStorage.getItem('toolkit-instructor-email')||'';}catch(e){}
+ function check(){var valid=/^[A-Z0-9._%+-]+@uww\.edu$/i.test(email.value.trim());var all=valid&&['tk-saved','tk-shared','tk-verified','tk-link'].every(id=>el.querySelector('#'+id).checked);var s=el.querySelector('#tk-check-status');s.className=all?'tk-ready':'tk-warning';s.textContent=all?'Checklist complete. Submit your Google Doc URL in Canvas.':'Complete all steps and enter a valid @uww.edu email before submitting.';}
+ el.addEventListener('change',check);email.addEventListener('input',function(){try{localStorage.setItem('toolkit-instructor-email',email.value.trim());}catch(e){}check();});check();
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build);else build();
+})();
+</script>

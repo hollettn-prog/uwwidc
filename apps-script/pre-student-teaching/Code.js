@@ -1949,3 +1949,132 @@ function cleanText_(
   ).trim();
 
 }
+
+/* HEALTHED 445 M1 pilot: student-owned Drive draft and submission */
+function health445M1Folder_() {
+  var props=PropertiesService.getUserProperties();
+  var id=props.getProperty('health445Id');
+  var course;
+  if(id){try{course=DriveApp.getFolderById(id);course.getName();}catch(e){course=null;}}
+  if(!course){var root=getOrCreateRootFolder_('Pre-Student Teaching Toolkit');course=getOrCreateChildFolder_(root,'HEALTHED 445');props.setProperty('health445Id',course.getId());}
+  return getOrCreateChildFolder_(course,'M1 Lesson Diagnosis & Redesign');
+}
+function health445M1Fields_(){return [
+  ['goal','Intended learning'],
+  ['diagnosis','What students do and what their work reveals'],
+  ['gap','What is missing from the lesson'],
+  ['revision','Redesigned lesson segment and directions'],
+  ['evidence','Individual evidence task and success criteria'],
+  ['rationale','Why the revision supports skill application']
+];}
+function health445M1GetDraft(){
+  var id=PropertiesService.getUserProperties().getProperty('health445M1DocId');
+  if(!id)return {exists:false,fields:{}};
+  try{
+    var file=DriveApp.getFileById(id);file.getName();
+    var doc=DocumentApp.openById(id), body=doc.getBody();
+    var marker='HEALTHED445_M1_DATA:';
+    var raw=body.getText();var line=raw.split('\n').filter(function(s){return s.indexOf(marker)===0;})[0];
+    var fields={};
+    if(line){try{fields=JSON.parse(Utilities.newBlob(Utilities.base64Decode(line.slice(marker.length))).getDataAsString());}catch(e){}}
+    return {exists:true,fields:fields,url:file.getUrl(),name:file.getName()};
+  }catch(e){return {exists:false,fields:{},error:'Saved draft could not be opened. Check the Google account used to create it.'};}
+}
+function health445M1SaveDraft(data){
+  if(!data||typeof data!=='object')throw Error('No responses received.');
+  var clean={};health445M1Fields_().forEach(function(f){clean[f[0]]=String(data[f[0]]||'').slice(0,25000);});
+  var props=PropertiesService.getUserProperties();var id=props.getProperty('health445M1DocId');
+  var doc;
+  if(id){try{doc=DocumentApp.openById(id);}catch(e){doc=null;}}
+  if(!doc){
+    doc=DocumentApp.create('HEALTHED 445 - M1 Lesson Diagnosis & Redesign');
+    var file=DriveApp.getFileById(doc.getId());file.moveTo(health445M1Folder_());
+    props.setProperty('health445M1DocId',doc.getId());
+  }
+  var body=doc.getBody();body.clear();
+  body.appendParagraph('HEALTHED 445 | M1 Lesson Diagnosis & Redesign').setHeading(DocumentApp.ParagraphHeading.HEADING1);
+  body.appendParagraph('Teaching Toolkit | Student working document');
+  health445M1Fields_().forEach(function(f){body.appendParagraph(f[1]).setHeading(DocumentApp.ParagraphHeading.HEADING2);body.appendParagraph(clean[f[0]]||'(Not yet completed)');});
+  // Structured data is kept in the student's own document to support reopening in the app.
+  var encoded=Utilities.base64Encode(Utilities.newBlob(JSON.stringify(clean)).getBytes());
+  var hidden=body.appendParagraph('HEALTHED445_M1_DATA:'+encoded);hidden.setFontSize(1).setForegroundColor('#ffffff');
+  doc.saveAndClose();return {ok:true,url:DriveApp.getFileById(doc.getId()).getUrl()};
+}
+function health445M1PrepareSubmission(data,email){
+  email=String(email||'').trim().toLowerCase();
+  if(!/^[a-z0-9._%+\-]+@uww\.edu$/.test(email))throw Error('Enter a valid instructor @uww.edu email.');
+  var required=health445M1Fields_();
+  required.forEach(function(f){if(!String((data||{})[f[0]]||'').trim())throw Error('Complete all assignment sections before preparing your submission.');});
+  var result=health445M1SaveDraft(data);
+  var id=PropertiesService.getUserProperties().getProperty('health445M1DocId');
+  var file=DriveApp.getFileById(id);
+  file.addViewer(email);
+  var access=file.getViewers().some(function(u){return u.getEmail().toLowerCase()===email;}) || file.getEditors().some(function(u){return u.getEmail().toLowerCase()===email;});
+  if(!access)throw Error('Sharing could not be verified. Check university Drive restrictions and try again.');
+  PropertiesService.getUserProperties().setProperty('health445M1Instructor',email);
+  return {ok:true,url:result.url,instructor:email};
+}
+function health445M1Instructor(){return PropertiesService.getUserProperties().getProperty('health445M1Instructor')||'';}
+
+var HEALTH445_MODULE_DATA_ = [{"title": "Lesson Diagnosis & Redesign", "fields": [{"id": "goal", "label": "Intended learning"}, {"id": "diagnosis", "label": "Lesson diagnosis"}, {"id": "gap", "label": "Missing evidence"}, {"id": "revision", "label": "Redesigned segment"}, {"id": "evidence", "label": "Individual evidence"}, {"id": "rationale", "label": "Reason for the change"}]}, {"title": "Needs-to-Evidence Plan", "fields": [{"id": "need", "label": "Learner need and evidence"}, {"id": "skill", "label": "Standard and health skill"}, {"id": "goal", "label": "Observable learning goal"}, {"id": "assessment", "label": "Assessment task and criteria"}, {"id": "preparation", "label": "Preparation and access"}, {"id": "revision", "label": "Alignment check and revision"}]}, {"title": "Health Skill Teaching & Practice Guide", "fields": [{"id": "model", "label": "Case A teacher model"}, {"id": "guided", "label": "Case B guided practice"}, {"id": "feedback", "label": "Feedback and revision"}, {"id": "independent", "label": "Case C individual application"}, {"id": "rationale", "label": "Method and access rationale"}, {"id": "revision", "label": "Revision note"}]}, {"title": "Classroom Management Decision Plan", "fields": [{"id": "routines", "label": "Opening and participation routines"}, {"id": "comment", "label": "Responding to a harmful comment"}, {"id": "participation", "label": "Participation without disclosure"}, {"id": "private", "label": "Private request and professional boundaries"}, {"id": "evidence", "label": "Check participation and learning"}, {"id": "revision", "label": "Management revision"}]}, {"title": "Complete Health Lesson Plan", "fields": [{"id": "goal", "label": "Lesson goal and context"}, {"id": "sequence", "label": "Lesson sequence and timing"}, {"id": "materials", "label": "Teacher and student materials"}, {"id": "assessment", "label": "Individual assessment and criteria"}, {"id": "access", "label": "Access and routines"}, {"id": "contingency", "label": "Time contingency and rationale"}]}, {"title": "Teaching Response Guide", "fields": [{"id": "observations", "label": "What the responses show"}, {"id": "checks", "label": "What you would check"}, {"id": "responses", "label": "Teaching response for A, B, and C"}, {"id": "timing", "label": "Remaining teaching time"}, {"id": "recheck", "label": "Individual recheck"}, {"id": "update", "label": "Six-minute update"}]}, {"title": "Health Skills Assessment & Revision Guide", "fields": [{"id": "criteria", "label": "Assessment criteria"}, {"id": "individual", "label": "Interpret individual work"}, {"id": "patterns", "label": "Class evidence"}, {"id": "feedback", "label": "Actionable feedback"}, {"id": "revision", "label": "Instructional revision"}, {"id": "followup", "label": "Follow-up evidence"}]}, {"title": "Reusable Health Unit Planning Template", "fields": [{"id": "goal", "label": "Unit focus and goal"}, {"id": "map", "label": "Unit sequence"}, {"id": "lesson", "label": "Revise the M5 lesson"}, {"id": "other", "label": "Connected lesson outlines"}, {"id": "evidence", "label": "Assessment and access"}, {"id": "rationale", "label": "Progression and revision rationale"}]}, {"title": "Toolkit Synthesis & Professional Reflection", "fields": [{"id": "index", "label": "Artifact index"}, {"id": "claim", "label": "Supported professional claim"}, {"id": "evidence", "label": "Evidence of revision"}, {"id": "limits", "label": "What the evidence cannot show"}, {"id": "next", "label": "Professional next step"}, {"id": "synthesis", "label": "Final synthesis"}]}];
+
+/* HEALTHED 445 shared module workspaces: student-owned Drive files. */
+function health445ModuleConfig_(module){
+  var all=JSON.parse(HEALTH445_MODULE_DATA_);
+  var m=Number(module);
+  if(!Number.isInteger(m)||m<1||m>all.length)throw Error('Invalid module.');
+  return all[m-1];
+}
+function health445ModuleFolder_(module){
+  var props=PropertiesService.getUserProperties();
+  var id=props.getProperty('health445Id');var course=null;
+  if(id){try{course=DriveApp.getFolderById(id);course.getName();}catch(e){}}
+  if(!course){var root=getOrCreateRootFolder_('Pre-Student Teaching Toolkit');course=getOrCreateChildFolder_(root,'HEALTHED 445');props.setProperty('health445Id',course.getId());}
+  return getOrCreateChildFolder_(course,'M'+module+' '+health445ModuleConfig_(module).title);
+}
+function health445ModuleGetDraft(module){
+  var m=Number(module);health445ModuleConfig_(m);
+  if(m===1)return health445M1GetDraft();
+  var props=PropertiesService.getUserProperties(),id=props.getProperty('health445M'+m+'DocId');
+  if(!id)return {exists:false,fields:{}};
+  try{
+    var file=DriveApp.getFileById(id);file.getName();var text=DocumentApp.openById(id).getBody().getText();
+    var marker='HEALTHED445_M'+m+'_DATA:';
+    var line=text.split('\n').filter(function(s){return s.indexOf(marker)===0;})[0];
+    var fields={};if(line){fields=JSON.parse(Utilities.newBlob(Utilities.base64Decode(line.slice(marker.length))).getDataAsString());}
+    return {exists:true,fields:fields,url:file.getUrl()};
+  }catch(e){throw Error('Could not reopen your saved document. Check the Google account used to save it. '+e.message);}
+}
+function health445ModuleSaveDraft(module,data){
+  var m=Number(module),cfg=health445ModuleConfig_(m);
+  if(m===1)return health445M1SaveDraft(data);
+  if(!data||typeof data!=='object')throw Error('No responses received.');
+  var clean={};cfg.fields.forEach(function(f){clean[f.id]=String(data[f.id]||'').slice(0,25000);});
+  var props=PropertiesService.getUserProperties(),key='health445M'+m+'DocId',id=props.getProperty(key),doc=null;
+  if(id){try{doc=DocumentApp.openById(id);}catch(e){throw Error('Existing draft cannot be opened. Check your Google account before saving to avoid creating a duplicate.');}}
+  if(!doc){doc=DocumentApp.create('HEALTHED 445 - M'+m+' '+cfg.title);DriveApp.getFileById(doc.getId()).moveTo(health445ModuleFolder_(m));props.setProperty(key,doc.getId());}
+  var body=doc.getBody();body.clear();
+  body.appendParagraph('HEALTHED 445 | Module '+m+' | '+cfg.title).setHeading(DocumentApp.ParagraphHeading.HEADING1);
+  body.appendParagraph('Teaching Toolkit | Student working document');
+  cfg.fields.forEach(function(f){body.appendParagraph(f.label).setHeading(DocumentApp.ParagraphHeading.HEADING2);body.appendParagraph(clean[f.id]||'(Not yet completed)');});
+  var encoded=Utilities.base64Encode(Utilities.newBlob(JSON.stringify(clean)).getBytes());
+  body.appendParagraph('HEALTHED445_M'+m+'_DATA:'+encoded).setFontSize(1).setForegroundColor('#ffffff');
+  doc.saveAndClose();return {ok:true,url:DriveApp.getFileById(doc.getId()).getUrl()};
+}
+function health445ModulePrepareSubmission(module,data,email){
+  var m=Number(module),cfg=health445ModuleConfig_(m);
+  if(m===1)return health445M1PrepareSubmission(data,email);
+  email=String(email||'').trim().toLowerCase();
+  if(!/^[a-z0-9._%+\-]+@uww\.edu$/.test(email))throw Error('Enter a valid instructor @uww.edu email.');
+  cfg.fields.forEach(function(f){if(!String((data||{})[f.id]||'').trim())throw Error('Complete the section: '+f.label);});
+  var saved=health445ModuleSaveDraft(m,data);
+  var id=PropertiesService.getUserProperties().getProperty('health445M'+m+'DocId'),file=DriveApp.getFileById(id);
+  file.addViewer(email);
+  var verified=file.getViewers().some(function(u){return u.getEmail().toLowerCase()===email;})||file.getEditors().some(function(u){return u.getEmail().toLowerCase()===email;});
+  if(!verified)throw Error('Could not verify instructor access. Check university sharing restrictions.');
+  PropertiesService.getUserProperties().setProperty('health445Instructor',email);
+  return {ok:true,url:saved.url,instructor:email};
+}
+function health445ModuleInstructor(){
+  return PropertiesService.getUserProperties().getProperty('health445Instructor')||health445M1Instructor();
+}

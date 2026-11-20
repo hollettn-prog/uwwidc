@@ -1,187 +1,37 @@
-<section class="course-page">
-
-  <!-- =====================================================
-       BACK
-       ===================================================== -->
-
-  <button
-    class="back-button"
-    onclick="showHome()">
-    ← All Courses
-  </button>
-
-
-  <!-- =====================================================
-       COURSE HEADER
-       ===================================================== -->
-
-  <header class="course-header">
-
-    <div class="eyebrow">
-      PEPROF 437
-    </div>
-
-    <h1>
-      Elementary Physical Education
-    </h1>
-
-    <p>
-      The resources in this toolkit are designed to help you
-      understand elementary learners, think through important
-      teaching decisions, and create materials you can return
-      to during field experiences and student teaching.
-    </p>
-
-  </header>
-
-
-  <!-- =====================================================
-       MODULE 1
-       ===================================================== -->
-
-  <section class="module">
-
-    <div class="module-number">
-      Module 1 · Foundations of Elementary PE
-    </div>
-
-
-    <div class="artifact-row">
-
-      <div>
-
-        <div class="artifact-title">
-          My Elementary PE Philosophy
-        </div>
-
-        <div class="artifact-description">
-          Think through what matters to you as an elementary
-          PE teacher and how those beliefs might show up in
-          your teaching.
-        </div>
-
-        <div class="artifact-meta available">
-          Available
-        </div>
-
-      </div>
-
-
-      <button
-        class="open-button"
-        onclick="openBuilder('437_M1_Philosophy')">
-        Open
-      </button>
-
-    </div>
-
-  </section>
-
-
-  <!-- =====================================================
-       MODULE 2
-       ===================================================== -->
-
-  <section class="module">
-
-    <div class="module-number">
-      Module 2 · Understanding Elementary Learners
-    </div>
-
-
-    <div class="artifact-row">
-
-      <div>
-
-        <div class="artifact-title">
-          Child Development Quick Reference Guide
-        </div>
-
-        <div class="artifact-description">
-          Create a practical reference for physical, cognitive,
-          social, and emotional development, then use what you
-          know about development to make instructional decisions.
-        </div>
-
-        <div class="artifact-meta available">
-          Available
-        </div>
-
-      </div>
-
-
-      <button
-        class="open-button"
-        onclick="openBuilder('437_M2_ChildDevelopment')">
-        Open
-      </button>
-
-    </div>
-
-  </section>
-
-
-  <!-- =====================================================
-       MODULE 3
-       ===================================================== -->
-
-  <section class="module">
-
-    <div class="module-number">
-      Module 3 · Curriculum & Planning
-    </div>
-
-
-    <div class="artifact-row">
-
-      <div>
-
-        <div class="artifact-title">
-          Curriculum Planning Resource
-        </div>
-
-        <div class="artifact-description">
-          Build a year-at-a-glance elementary PE curriculum
-          and explain the decisions behind what you teach,
-          when you teach it, and what you prioritize.
-        </div>
-
-        <div class="artifact-meta available">
-          Available
-        </div>
-
-      </div>
-
-
-      <button
-        class="open-button"
-        onclick="openBuilder('437_M3_Curriculum')">
-        Open
-      </button>
-
-    </div>
-
-  </section>
-
-
-  <!-- =====================================================
-       CLOSING NOTE
-       ===================================================== -->
-
-  <div
-    class="future-note"
-    style="
-      margin-left:0;
-      margin-right:0;
-      margin-top:50px;
-    ">
-
-    These resources are meant to grow with you. As you gain
-    experience in schools, come back to them, make changes,
-    and adapt them to the students and teaching situations
-    you encounter.
-
-  </div>
-
-
-</section>
+<section class="course-page"><button class="back-button" onclick="showHome()">← All Courses</button><header class="course-header"><div class="eyebrow">PEPROF 437</div><h1>Elementary Physical Education</h1><p>Select a module to open its Teaching Toolkit resource.</p></header><div class="module"><label for="p437select"><strong>Choose a module</strong></label><select id="p437select" style="display:block;width:100%;padding:12px;margin:10px 0;font:inherit"></select><div id="p437info"></div></div></section><script>(function(){const data=[{"module": 1, "moduleTitle": "Foundations of Elementary PE", "title": "My Elementary PE Philosophy", "builder": "437_M1_Philosophy"}, {"module": 2, "moduleTitle": "Understanding Elementary Learners", "title": "Child Development Quick Reference Guide", "builder": "437_M2_ChildDevelopment"}, {"module": 3, "moduleTitle": "Curriculum & Planning", "title": "Curriculum Planning Resource", "builder": "437_M3_Curriculum"}];const select=document.getElementById('p437select'),info=document.getElementById('p437info');data.forEach(d=>select.add(new Option('Module '+d.module+' · '+d.moduleTitle,d.module)));function render(){const d=data[Number(select.value)-1];info.innerHTML='<h2>'+d.title+'</h2><p>Open the guided resource and save your work in your Toolkit.</p><button class="open-button" type="button" id="p437open">Open resource</button>';document.getElementById('p437open').onclick=()=>openBuilder(d.builder)}select.onchange=render;render()})();</script>
+<style id="submission-checklist-style">
+.toolkit-submit-checklist{margin:28px 0 12px;padding:20px;border:1px solid #b9c9c9;border-radius:12px;background:#f7faf9;color:#203337;font-family:Arial,Helvetica,sans-serif;line-height:1.55}
+.toolkit-submit-checklist h3{margin:0 0 6px;font-size:20px;color:#165e65}
+.toolkit-submit-checklist p{margin:6px 0 14px}
+.toolkit-submit-checklist label{display:flex;align-items:flex-start;gap:10px;margin:13px 0;cursor:pointer}
+.toolkit-submit-checklist input[type=checkbox]{margin-top:5px;min-width:17px;min-height:17px;accent-color:#165e65}
+.toolkit-submit-checklist input[type=email]{width:100%;padding:10px;border:1px solid #88999b;border-radius:6px;box-sizing:border-box;font-size:16px}
+.toolkit-submit-checklist .tk-warning{color:#8b3030;font-size:14px}
+.toolkit-submit-checklist .tk-ready{color:#165e65;font-weight:bold}
+.toolkit-submit-checklist a{color:#165e65;text-decoration:underline}
+</style>
+<script id="submission-checklist-script">
+(function(){
+'use strict';
+var course = document.currentScript && document.currentScript.closest('[data-course]')?.getAttribute('data-course') || 'toolkit';
+function moduleKey(){var selects=[...document.querySelectorAll('select')];var selected=selects.find(s=>/module/i.test((s.id||'')+' '+(s.name||'')+' '+(s.getAttribute('aria-label')||'')));return selected?selected.value:(document.querySelector('[data-module].active')?.getAttribute('data-module')||'current');}
+function build(){
+ var existing=document.getElementById('tk-submit-checklist');if(existing) return;
+ var el=document.createElement('section');el.id='tk-submit-checklist';el.className='toolkit-submit-checklist';el.setAttribute('aria-labelledby','tk-submit-heading');
+ el.innerHTML='<h3 id="tk-submit-heading">Before you submit to Canvas</h3><p>Complete these steps after finishing your assignment. Your instructor must be able to open your Google Doc.</p>'+
+ '<label><input type="checkbox" id="tk-saved"> <span>I saved my completed assignment to Google Drive and opened the document to check my work.</span></label>'+
+ '<label for="tk-instructor-email" style="display:block">Instructor’s UW–Whitewater email address</label><input id="tk-instructor-email" type="email" inputmode="email" autocomplete="email" placeholder="instructor@uww.edu" aria-describedby="tk-email-help"><p id="tk-email-help" style="font-size:13px">Use the instructor email listed in your Canvas course. Entering an address here does not automatically share your file.</p>'+
+ '<label><input type="checkbox" id="tk-shared"> <span>In Google Drive, I selected <strong>Share</strong>, added this instructor email, set access to <strong>Viewer</strong>, and clicked <strong>Send</strong>.</span></label>'+
+ '<label><input type="checkbox" id="tk-verified"> <span>I checked the Google Doc’s <strong>Share</strong> settings and confirmed this instructor is listed as a Viewer.</span></label>'+
+ '<label><input type="checkbox" id="tk-link"> <span>I copied the Google Doc link and am ready to submit it in the Canvas Toolkit assignment.</span></label>'+
+ '<p id="tk-check-status" role="status" aria-live="polite" class="tk-warning">Complete all steps before submitting your link.</p>';
+ var anchor=document.querySelector('[data-toolkit-workspace]')||document.querySelector('main')||document.querySelector('.content')||document.body;
+ anchor.appendChild(el);
+ var email=el.querySelector('#tk-instructor-email');
+ try{email.value=localStorage.getItem('toolkit-instructor-email')||'';}catch(e){}
+ function check(){var valid=/^[A-Z0-9._%+-]+@uww\.edu$/i.test(email.value.trim());var all=valid&&['tk-saved','tk-shared','tk-verified','tk-link'].every(id=>el.querySelector('#'+id).checked);var s=el.querySelector('#tk-check-status');s.className=all?'tk-ready':'tk-warning';s.textContent=all?'Checklist complete. Submit your Google Doc URL in Canvas.':'Complete all steps and enter a valid @uww.edu email before submitting.';}
+ el.addEventListener('change',check);email.addEventListener('input',function(){try{localStorage.setItem('toolkit-instructor-email',email.value.trim());}catch(e){}check();});check();
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build);else build();
+})();
+</script>

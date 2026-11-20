@@ -1,0 +1,15 @@
+PRE-SERVICE TEACHING TOOLKIT UPDATE
+
+Replace in existing Apps Script project:
+- Code.gs with Code.js
+- HEALTHED445.html
+- PEPROF437.html
+Keep all other files unchanged.
+
+Use a NEW VERSION under Deploy > Manage deployments; test with a student Google account.
+HEALTHED 445 modules 1-9 use one dropdown and Drive-backed guided workspaces.
+PEPROF 437 modules 1-3 use the same dropdown and retain their original complete builders.
+Additional PEPROF 437 modules were not in the supplied source; they are not invented here.
+
+Test save, reopen, share to @uww.edu, and instructor access before using with students.
+The Canvas assignment remains the authoritative rubric and submission destination.
